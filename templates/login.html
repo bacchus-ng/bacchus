@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+
+{% if next %}
+    {% if user.is_authenticated %}
+
+<p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+
+    {% endif %}
+{% endif %}
+
+<div class="container">
+    <div class="row tile_count">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <img src="{% static 'gent/production/images/bacchus.png' %}" width="80%" class="img-fluid profile_img" >
+                    <h4 class="tile_count" align="center">Web Console Login</h4>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="{%  url 'login' %}">
+{% csrf_token %}
+
+                        <p class="">
+                            
+              				<div>
+                				<input type="text" class="form-control" placeholder="Username" name="username" id="id_username" required="" />
+              				</div>                            
+              			
+      						<br>
+              			
+              				<div>
+								<input class="form-control" placeholder="Password" id="id_password" name="password" type="password" required=""  /> 
+							</div>
+                            
+                        </p>
+                        {% if form.errors %}
+
+							<p class="text-error">Your username and password didn't match. Please try again.</p>
+						{% endif %}
+                        
+                        <p class="bs-component">
+                            <center>
+                                <input class="btn btn-primary" type="submit" value="Login" />
+                            </center>
+                        </p>
+                        <input type="hidden" name="next" value="{{ next }}" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+
+<script>
+{% if not user.is_authenticated %}
+$("ul.nav.navbar-nav.navbar-right").css("display","none");
+{% endif %}
+</script>
+
+{% endblock %}

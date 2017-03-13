@@ -1,0 +1,25 @@
+{% extends 'gent_base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="right_col" role="main">
+	<div class="row tile_count">
+		
+		<h3>Managers</h3>
+		<br>
+		
+				<img src="{% static 'gent/production/images/redhat.jpg' %}" width="5%" class="img-fluid profile_img" >
+			{% for rhvm in managers %}
+
+				<br>
+				<h2>{{ rhvm.name}}</h2>
+				version {{ rhvm.version}}<br>
+				discovered : {{ rhvm.discovered}}
+				
+			{% endfor %}		
+		
+	</div>
+</div>	
+
+{% endblock%}
