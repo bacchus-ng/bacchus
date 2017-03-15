@@ -1,0 +1,54 @@
+{% extends 'gent_base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+ <div class="row">
+              <div class="">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Virtual Machines <small></small></h2>
+                   
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table">
+                      <thead>
+                        <tr>                          
+                          <th>Name</th>
+                          <th>Cluster</th>
+                          <th>Data Center</th>
+                          <th>VM ID</th>
+                          <th>Status</th>
+                          <th>Protected</th>
+                          <th>Discovery Date</th>
+                          <th>Last Update</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	{% for vm in vms %}
+                        <tr>
+                          <td>{{ vm.name}}</td>
+                          <td>{{ vm.cluster.name}}</td>
+                          <td>{{ vm.cluster.dc.name}}</td>
+                          <td>{{ vm.vmid}}</td>
+                          <td>{{ vm.status}}</td>
+                          <td>{{ vm.protected}}</td>
+                          <td>{{ vm.discovered}}</td>
+                          <td>{{ vm.updated}}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <button type="submit" class="save btn btn-info" onclick="window.location.href='/runbackup/'" >On Demand Backup</button>
+                </div>
+              </div>
+              
+	</div>	
+
+
+{% endblock%}
+

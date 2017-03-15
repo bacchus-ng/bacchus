@@ -1,4 +1,4 @@
-echo "Staring worker"
+echo "Starting worker"
 sh worker.sh
 sleep 2
 echo "Starting Beat"

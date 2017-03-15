@@ -1,0 +1,38 @@
+{% extends 'gent_base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+	<div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Add Virtualization Manager</h2>
+                    
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+
+	<div class="clearfix xpanel" width="50%">
+		
+    	<form method="POST" class="post-form">
+    	{% csrf_token %}
+    		<table class="table" style="width:500px" >
+        		{{ manager.as_table }}
+        		
+        	</table>
+        	<button type="submit" class="save btn btn-primary">Save</button>
+    	</form>
+    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+	
+
+
+
+
+{% endblock%}

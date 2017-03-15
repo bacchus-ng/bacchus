@@ -137,8 +137,20 @@ class VMTools:
 		myvm = VM.objects.get(vmid=vm.id)
 		vm_backups = VmBackups(vmid=myvm, name=snapshot_name,export=export_domain.name,start=VMTools.local_now())
 		vm_backups.save()
-
-		snap = snapshots_service.add(types.Snapshot(description=snapshot_name,persist_memorystate=False),)
+		
+		try:
+			snap = snapshots_service.add(types.Snapshot(description=snapshot_name,persist_memorystate=False),)
+			
+		except Exception as e:
+			print "Snapshot creation failed. \n %s" %str(e)  
+			vm_backups.status = 1
+			vm_backups.save()
+			connection.close()
+			exit(1)
+		
+			
+			
+			
 		print "[ vmbackup",vm_backups.id,"] Snapshot creation initiated."
 
 		vm_backups.status = 4

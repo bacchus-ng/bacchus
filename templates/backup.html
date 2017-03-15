@@ -1,0 +1,40 @@
+{% extends 'gent_base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+ <div class="row">
+              <div class="">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>On Demand Backup <small></small></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+				    <table class="table" >
+                      <thead>
+                        <tr class="success">           
+                          <th>Initiated backup for following VMs</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	{% for vm in vms %}
+                        <tr class="success">
+                          <td>{{ vm }}</td>
+                        </tr>
+                        {% endfor %}
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>              
+	</div>	
+
+<script>
+window.setTimeout(function () {
+    location.href = "/tasks/";
+}, 5000);
+</script>
+
+{% endblock%}

@@ -1,0 +1,49 @@
+{% extends 'gent_base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+ <div class="row">
+              <div class="">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>On Demand Backup <small></small></h2>
+                   
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+				<form method="POST" class="post-form">
+				{% csrf_token %}
+                    <table class="table" >
+                      <thead>
+                        <tr>           
+                          <th>Name</th>
+                          <th>Cluster</th>
+                          <th>Data Center</th>
+                          <th>VM ID</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	{% for vm in vms %}
+                        <tr>
+                          <td><input type="checkbox" name="backupvmlist" value="{{vm.name}}"/>&nbsp;{{ vm.name}}</td>
+                          <td>{{ vm.cluster.name}}</td>
+                          <td>{{ vm.cluster.dc.name}}</td>
+                          <td>{{ vm.vmid}}</td>
+                          <td>{{ vm.status}}</td>
+
+                        </tr>
+                        {% endfor %}
+                        
+                      </tbody>
+                    </table>
+					<button type="submit" class="save btn btn-danger">Run Backup</button>
+					</form>
+                  </div>
+                </div>
+              </div>              
+	</div>	
+
+
+{% endblock%}

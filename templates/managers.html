@@ -3,23 +3,46 @@
 
 {% block content %}
 
-<div class="right_col" role="main">
-	<div class="row tile_count">
-		
-		<h3>Managers</h3>
-		<br>
-		
-				<img src="{% static 'gent/production/images/redhat.jpg' %}" width="5%" class="img-fluid profile_img" >
-			{% for rhvm in managers %}
+ <div class="row">
+	<div class="">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Virtualization Managers <small></small></h2>
+                  
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table class="table">
+					<thead>
+                        <tr>                          
+                          <th>Name</th>
+                          <th>FQDN</th>
+                          <th>Engine API URL</th>
+                          <th>Version</th>
+                          <th>Discovery Date</th>
+                          <th>Last Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      	{% for rhvm in managers %}
+                      		                      
+                        <tr>
+                          <td>{{ rhvm.name}}</td>
+                          <td>{{ rhvm.fqdn}}</td>
+                          <td>{{ rhvm.url}}</td>
+                          <td>{{ rhvm.version}}</td>
+                          <td>{{ rhvm.discovered}}</td>
+                          <td>{{ rhvm.updated}}</td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
 
-				<br>
-				<h2>{{ rhvm.name}}</h2>
-				version {{ rhvm.version}}<br>
-				discovered : {{ rhvm.discovered}}
-				
-			{% endfor %}		
-		
-	</div>
-</div>	
+			</div>
+			<button type="submit" class="save btn btn-info" onclick="window.location.href='/add_manager/'" >Add New Manager</button>
+		</div>
+	</div>	
+</div>
 
 {% endblock%}
+
