@@ -3,7 +3,7 @@
 
 	Author  : Niyazi Elvan
 	Date    : 06.03.2017
-	Updates :
+	Updates : 16.03.2017 - 
 """
 import time
 import sys
@@ -12,6 +12,7 @@ from django.utils import timezone
 from models import *
 import ovirtsdk4 as sdk
 import ovirtsdk4.types as types
+from django.conf.urls.static import static
 
 class VMTools:
 
@@ -25,8 +26,8 @@ class VMTools:
 	Connect to Manager with the given name and return connection
 	"""
 	@staticmethod
-	def connect_to_rhevm(rhevmname):
-		rhevm = Manager.objects.get(name=rhevmname)
+	def connect_to_rhevm(manager):
+		rhevm = Manager.objects.get(name=manager)
 		connection = sdk.Connection(url=str(rhevm.url), username=str(rhevm.username), password=str(rhevm.password), insecure=True )
 		return connection
 	
@@ -96,20 +97,28 @@ class VMTools:
                                 vmc = VM.objects.filter(vmid=vm.id).count()
                                 if (vmc > 0):
                                        	print "%s, already discovered !" % (vm.name)
+                                       	myvm = VM.objects.get(vmid=vm.id)
+                                       	myvm.updated = VMTools.local_now()
+                                       	myvm.status = vm.status
+                                       	myvm.save()
                                 else:
-					print "%s, found new  VM !!" % (vm.name)
-					print "Adding entry to database"
-					now = VMTools.local_now()
-					mycl = Cluster.objects.get(clid=vm.cluster.id)
-					myvm = VM(cluster=mycl,name=vm.name,vmid=vm.id,status=vm.status.value,discovered=now,updated=now)
-					myvm.save()
+                                	
+                                	if (vm.name.startswith('bacchus_')):
+                                		print "%s, found bacchus VM backup clone. Skipping. " %(vm.name)
+                                	else:
+                                		print "%s, found new  VM !!" % (vm.name)
+                                		now = VMTools.local_now()
+                                		mycl = Cluster.objects.get(clid=vm.cluster.id)
+                                		myvm = VM(cluster=mycl,name=vm.name,vmid=vm.id,status=vm.status.value,discovered=now,updated=now)
+                                		print "Adding entry to database"
+                                		myvm.save()
                         connection.close()
 
 		return True
 
 	@staticmethod
-	def get_export_domain(rhevmname):
-		connection = VMTools.connect_to_rhevm(rhevmname)
+	def get_export_domain(manager):
+		connection = VMTools.connect_to_rhevm(manager)
 		sds_service = connection.system_service().storage_domains_service()
 		sds = sds_service.list()
 		i = 0
@@ -124,16 +133,33 @@ class VMTools:
         """
         Backup the VM on given manager
         """
-
+	@staticmethod
+	def get_vm_size(manager,vmname):
+		size = 0
+		connection = VMTools.connect_to_rhevm(manager)
+		vms_service = connection.system_service().vms_service()
+		vm = vms_service.list(search='name='+str(vmname))[0]
+		vm_service = vms_service.vm_service(vm.id)
+		disk_attachments_service = vm_service.disk_attachments_service()
+		disk_attachments = disk_attachments_service.list()
+		for disk_attachment in disk_attachments:
+			disk = connection.follow_link(disk_attachment.disk)
+			size = size + disk.actual_size
+		
+		connection.close()	
+			
+		return size
+			
         @staticmethod
-        def backup_vm(rhevmname,vmname):
-                connection = VMTools.connect_to_rhevm(rhevmname)
+        def backup_vm(manager,vmname):
+                connection = VMTools.connect_to_rhevm(manager)
                 vms_service = connection.system_service().vms_service()
                 vm = vms_service.list(search='name='+str(vmname))[0]
                 snapshots_service = vms_service.vm_service(vm.id).snapshots_service()
                 snapshot_name = "bacchus_"+vmname+"_"+str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S'))
-		export_domain = VMTools.get_export_domain(rhevmname)
+		export_domain = VMTools.get_export_domain(manager)
 		print "Creating a backup record at database "
+
 		myvm = VM.objects.get(vmid=vm.id)
 		vm_backups = VmBackups(vmid=myvm, name=snapshot_name,export=export_domain.name,start=VMTools.local_now())
 		vm_backups.save()
@@ -147,10 +173,7 @@ class VMTools:
 			vm_backups.save()
 			connection.close()
 			exit(1)
-		
-			
-			
-			
+
 		print "[ vmbackup",vm_backups.id,"] Snapshot creation initiated."
 
 		vm_backups.status = 4
@@ -176,6 +199,10 @@ class VMTools:
 				break
 
 		print "[ vmbackup",vm_backups.id,"] Clone VM completed "
+		mysize = VMTools.get_vm_size(manager,snapshot_name)
+		print "VM backup size is %d " %mysize
+		vm_backups.size = mysize
+		vm_backups.save()
 		
 		print "[ vmbackup",vm_backups.id,"] Removing snapshot %s" %(snapshot_name)
 		vm_backups.status = 6
@@ -213,5 +240,3 @@ class VMTools:
                 connection.close()
 
                 return True
-
-

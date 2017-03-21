@@ -14,17 +14,19 @@
                   <div class="x_content">
                     <br />
 
-	<div class="clearfix xpanel" width="50%">
+	<div class="clearfix xpanel col-md-4 " >
+		
 		
     	<form method="POST" class="post-form">
     	{% csrf_token %}
-    		<table class="table" style="width:500px" >
+    		<table class="table table-striped "  >
         		{{ manager.as_table }}
         		
         	</table>
         	<button type="submit" class="save btn btn-primary">Save</button>
     	</form>
-    </div>
+    	</div>
+    
 
                   </div>
                 </div>

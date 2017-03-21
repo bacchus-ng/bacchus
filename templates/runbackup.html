@@ -3,6 +3,7 @@
 
 {% block content %}
 
+
  <div class="row">
               <div class="">
                 <div class="x_panel">
@@ -14,10 +15,12 @@
                   <div class="x_content">
 				<form method="POST" class="post-form">
 				{% csrf_token %}
-                    <table class="table" >
+                    
+                    <table id = "datatable-backups" class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>           
                           <th>Name</th>
+                          <th>Manager</th>
                           <th>Cluster</th>
                           <th>Data Center</th>
                           <th>VM ID</th>
@@ -27,7 +30,8 @@
                       <tbody>
                       	{% for vm in vms %}
                         <tr>
-                          <td><input type="checkbox" name="backupvmlist" value="{{vm.name}}"/>&nbsp;{{ vm.name}}</td>
+                          <td><input type="checkbox" class="flat" name="backupvmlist" value="{{vm.name}}"/>&nbsp;{{ vm.name}}</td>
+                          <td>{{ vm.cluster.dc.manager.name}}</td>
                           <td>{{ vm.cluster.name}}</td>
                           <td>{{ vm.cluster.dc.name}}</td>
                           <td>{{ vm.vmid}}</td>
@@ -44,6 +48,7 @@
                 </div>
               </div>              
 	</div>	
+
 
 
 {% endblock%}

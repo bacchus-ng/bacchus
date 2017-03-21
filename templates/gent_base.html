@@ -22,6 +22,13 @@
     <!-- iCheck -->
     <link href="{% static 'gent/vendors/iCheck/skins/flat/green.css' %}" rel="stylesheet">
     
+    <!-- Datatables -->
+    <link href="{% static 'gent/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'gent/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'gent/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'gent/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'gent/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
+    
 	
     <!-- bootstrap-progressbar -->
     <link href="{% static 'gent/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet">
@@ -84,18 +91,20 @@
                     <ul class="nav child_menu">
                       <li><a href="/vms/">Virtual Machines</a></li>
                       <li><a href="/runbackup/">On Demand Backup</a></li>
+                      <li><a href="/restore/">Restore</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-table"></i> Schedules <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-table"></i> Automation <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="/schedules/">Recurring Backups</a></li>
                       <li><a href="/maintenance/">Maintenance Jobs</a></li>
                       
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-bar-chart-o"></i> Reporting <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="/tasks/">Tasks</a></li>
+                      <li><a href="/backups/">Backups</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -213,8 +222,26 @@
     <!-- ECharts -->
     <script src="{% static 'gent/vendors/echarts/dist/echarts.js' %}"></script>
     
-
-
+    <!-- Datatables -->
+    <script src="{% static 'gent/vendors/datatables.net/js/jquery.dataTables.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-buttons/js/buttons.flash.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-buttons/js/buttons.html5.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-buttons/js/buttons.print.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %} "></script>
+    <script src="{% static 'gent/vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/jszip/dist/jszip.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/pdfmake/build/pdfmake.min.js' %} "></script>
+    <script src="{% static 'gent/vendors/pdfmake/build/vfs_fonts.js' %} "></script>
+	
+	<script src="{% static 'js/runbackup.js' %} "></script>
+	<script src="{% static 'js/tasks.js' %} "></script>
+	
     <!-- Custom Theme Scripts -->
     <script src="{% static 'gent/build/js/custom.js' %} "></script>
 	

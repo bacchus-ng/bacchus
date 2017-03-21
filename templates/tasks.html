@@ -1,16 +1,19 @@
 {% extends 'gent_base.html' %}
 {% load staticfiles %}
+{% load size_helper %}
 
 {% block content %}
+
+
 
  <div class="row">
               <div class="">
                 <div class="x_panel">
-                  <div class="x_title">
+                  <div  class="x_title">
                     <h2>Backup Task History </h2>
                     <div class="pull-right">
                     			<label class="switch">
-  									<input type="checkbox" checked>
+  									<input type="checkbox" checked id="refresh_button" onclick="page_refresh_jq()">
   									<div class="slider round"></div>
 								</label>
 								<br>
@@ -19,59 +22,10 @@
          <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-				    <table class="table" >
-                      <thead>
-                        <tr>           
-                          <th>VM</th>
-                          <th>Size</th>
-                          <th>Status</th>
-                          <th>Start</th>
-                          <th>Last Update</th>
-                          <th>End</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      	{% for task in tasks %}
-                        <tr >
-                          <td>{{ task.vmid.name }}</td>
-                          <td>{{ task.size }}</td>
-                          
-                          {% if task.status == 0 %}
-                          	<td class="success" >Successful</td>
-                          {% elif task.status == 1 %}
-                          	<td class="danger" > Failed </td>
-                          {% elif task.status == 2 %}
-                          	<td class="danger" >Aborted </td>
-                          {% elif task.status == 3 %}
-                          	<td class="info" >Initiated </td>
-                          {% elif task.status == 4 %}
-                          	<td class="info" >Creating snapshot</td>
-                          {% elif task.status == 5 %}
-                          	<td class="info" >Cloning Snapshot</td>
-                          {% elif task.status == 6 %}
-                          	<td class="info" >Removing Snapshot</td>
-                          {% elif task.status == 7 %}
-                          	<td class="info" >Exporting VM</td>
-                          {% elif task.status == 8 %}
-                          	<td class="info" >Removing Clone</td>                     	
-                          {% endif %}
-                          </td>
-                          <td>{{ task.start }}</td>
-                          <td>{{ task.updated }}</td>
-                          <td>{{ task.end }}</td>
-                          
-                        </tr>                    
-                        {% endfor %}
-                        <tr>
-                        	<td></td>
-                        	<td></td>
-                        	<td></td>
-                        	<td></td>
-                        	<td></td>
-                        	<td></td>
-                        </tr>
-                      </tbody>
-                    </table>
+				    
+				    {% include "tasks_history_table.html" %}
+					
+					
                   </div>
                 </div>
               </div>              
@@ -79,4 +33,7 @@
 
 
 
+
+
 {% endblock%}
+

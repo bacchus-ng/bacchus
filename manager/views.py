@@ -33,6 +33,9 @@ def add_manager(request):
                 manager.discovered = VMTools.local_now()
                 manager.updated = VMTools.local_now()
                 manager.save()
+                VMTools.run_dc_inv()
+                VMTools.run_cluster_inv()
+                VMTools.run_vm_inv()
                 return redirect('/managers/',)
             
         else:
@@ -62,6 +65,10 @@ def run_backup(request):
 @login_required(login_url="/login/")
 def list_tasks(request):
     tasks = VmBackups.objects.all().order_by('start').reverse()
+    
+    if request.is_ajax():
+        return render(request,'tasks_history_table.html',{'tasks': tasks })
+    
     return render(request,'tasks.html',{'tasks': tasks })
 
 

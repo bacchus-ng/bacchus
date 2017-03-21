@@ -10,9 +10,13 @@ from celery.utils.log import get_task_logger
 logger = get_task_logger(__name__)
 
 @shared_task
-def runVmInventory():
-	logger.info("Running VM inventory" )
-	return VMTools.run_vm_inv()
+def runInventory():
+	logger.info("Running Bacchus inventory" )
+	VMTools.run_dc_inv()
+	VMTools.run_cluster_inv()
+	VMTools.run_vm_inv()
+	
+	return True
 
 @shared_task
 def backup_vm(rhevmname,vmname):

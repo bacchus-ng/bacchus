@@ -59,7 +59,7 @@ class VmBackups(models.Model):
 	start       = models.DateTimeField(null=True)
 	end         = models.DateTimeField(null=True)
 	updated     = models.DateTimeField(auto_now=True)
-	size        = models.IntegerField(default=0)
+	size        = models.BigIntegerField(default=0)
 	log         = models.TextField(null=True)
   
 """
