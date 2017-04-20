@@ -25,7 +25,7 @@ SECRET_KEY = 'c+x@xt###ym^1v#c401cn@z9xi@8tkdpx^=u3-zzkk35rv%66$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [""]
+ALLOWED_HOSTS = ["bacchus"]
 
  
  
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'manager',
     'login',
+    'scheduler',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,4 @@ CELERY_BROKER_URL = 'amqp://bacchus:bacchus@localhost:5672/bacchus'
 CELERY_RESULT_BACKEND = 'django-db'
 
 
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

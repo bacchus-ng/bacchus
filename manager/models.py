@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 import datetime
 
+
 # Create your models here.
 
 class Manager(models.Model):
@@ -42,6 +43,7 @@ class VM(models.Model):
 	status      = models.CharField(max_length=16)
 	protected   = models.BooleanField(default=False)
 	last_backup = models.DateTimeField(null=True)
+	schedule    = models.ForeignKey('scheduler.Schedules', null=True, blank=True, default=None)
 
 class StorageDomain(models.Model):
 	id          = models.AutoField(primary_key=True)
@@ -61,7 +63,9 @@ class VmBackups(models.Model):
 	updated     = models.DateTimeField(auto_now=True)
 	size        = models.BigIntegerField(default=0)
 	log         = models.TextField(null=True)
-  
+
+	
+	  
 """
 	VmBackups.status :
 	0) Successful

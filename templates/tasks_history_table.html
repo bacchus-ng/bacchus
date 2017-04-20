@@ -55,23 +55,5 @@
                       </tbody>
 					</table>
 
-<script>
 
-	function page_refresh_jq(){
-		setInterval(function(){
-			if (document.getElementById('refresh_button').checked){
-			    $.ajax({    
-			       url: '/tasks/',
-			          success: function(data) {
-			          $('#tasks-history-table').html(data);		          
-			          }
-			    });
-			}
-		}, 5000)
-	}
-	
-	page_refresh_jq()
-	
-
-</script>     
 

@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^vms/$', views.list_vms, name='vms'),
     url(r'^runbackup/$', views.run_backup, name='vms'),
     url(r'^tasks/$', views.list_tasks, name='tasks'),
-    url(r'^schedules/$', views.list_schedules, name='scheds'),
+    
     
 ]
 

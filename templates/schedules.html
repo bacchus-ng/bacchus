@@ -7,29 +7,46 @@
               <div class="">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Defined Schedules<small></small></h2>
+                    <h2>Schedules<small></small></h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-				    <table class="table" >
+				    <table class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap" >
                       <thead>
-                        <tr>           
-                          <th>sdsds</th>
+                        <tr>                          
+                          <th>Schedule Name</th>
+                          <th>VMs</th>
+                          <th>Minute</th>
+                          <th>Hour</th>
+                          <th>Day of Month</th>
+                          <th>Month of Year</th>
+                          <th>Day of Week</th>
+                          <th>Action</th>                         
                         </tr>
                       </thead>
                       <tbody>
-                      	{% for vm in vms %}
-                        <tr>
-                          <td>{{ vm }}</td>
+                      	{% for sched in scheds %}
+                        <tr>                         
+                          <td>{{ sched.name }}</td>
+                          <td>But</td>
+                          <td>{{ sched.minute }}</td>
+                          <td>{{ sched.hour }}</td>
+                          <td>{{ sched.month }}</td>
+                          <td>{{ sched.year }}</td>
+                          <td>{{ sched.week }}</td>
+                          <td>                          	
+                          	<button type="submit" class="btn btn-warning btn-xs" >Modify</button>
+                          	<button type="submit" class="btn btn-danger btn-xs" type="submit" name="remove_levels" value="delete" >Delete</button>                          
+                          </td>
                         </tr>
                         {% endfor %}
                        
                       </tbody>
                     </table>
                   </div>
+                  <button type="submit" class="save btn btn-info" onclick="window.location.href='/definesched/'" >Define a Schedule</button>
                 </div>
               </div>              
 	</div>	
-
 
 {% endblock%}

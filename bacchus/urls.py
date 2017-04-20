@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^logout/', views.logout, {'next_page': '/login'}),
     url(r'', include('login.urls')),
     url(r'', include('manager.urls')),
+    url(r'', include('scheduler.urls')),
 ]

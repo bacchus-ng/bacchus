@@ -1,6 +1,7 @@
 $(document).ready(function() {
-    $('#tasks-history-table').DataTable( {
+    var tasks_table = $('#tasks-history-table').DataTable( {
         "order": [[ 3, "desc" ]],
         "iDisplayLength": 25
-    } );   
+    } );
+
 } );
