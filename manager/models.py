@@ -42,8 +42,8 @@ class VM(models.Model):
 	updated     = models.DateTimeField()
 	status      = models.CharField(max_length=16)
 	protected   = models.BooleanField(default=False)
-	last_backup = models.DateTimeField(null=True)
-	schedule    = models.ForeignKey('scheduler.Schedules', null=True, blank=True, default=None)
+	
+	
 
 class StorageDomain(models.Model):
 	id          = models.AutoField(primary_key=True)
