@@ -51,7 +51,7 @@ Please install the following packages on to your favorite Linux distro.
 - in bacchus/settings.py change the line ALLOWED_HOSTS = [""] to ALLOWED_HOSTS = ["your_hostname"]
 
 10. Create Bacchus admin account
-- *[bacchus@localhost]$ python manage.py createsuperuser *
+- *[bacchus@localhost]$ python manage.py createsuperuser*
 
 11. Start Bacchus
 - *[bacchus@localhost]$ cd scripts*
