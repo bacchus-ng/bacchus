@@ -31,10 +31,10 @@ Please install the following packages on to your favorite Linux distro.
 - grant all on bacchus.* to bacchus@localhost identified by 'bacchus';
 
 6. Create bacchus user on RabbitMQ (run the following commands with root user)
-- # rabbitmqctl add_user bacchus bacchus
-- # rabbitmqctl add_vhost bacchus
-- # rabbitmqctl set_user_tags bacchus Administrator
-- # rabbitmqctl set_permissions -p bacchus bacchus ".*" ".*" ".*"
+- rabbitmqctl add_user bacchus bacchus
+- rabbitmqctl add_vhost bacchus
+- rabbitmqctl set_user_tags bacchus Administrator
+- rabbitmqctl set_permissions -p bacchus bacchus ".*" ".*" ".*"
 
 6. Create bacchus user and group on Linux
 - useradd bacchus
