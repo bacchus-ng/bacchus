@@ -9,7 +9,7 @@ Bacchus is an opensource backup solution for oVirt/RHEV-M. The backup mechanism 
 
 The code may be lacking error handling in many cases for now. We are aware of it and will be covering the cases very soon. We need voluntary testers. Please drop an e-mail if you are interested.
 
-We use MariaDB as backend database, you may choose your own flavor but it is your responsibility to take care of it.
+We use MariaDB as backend database, you may choose your own flavor but it is your responsibility to take care of it. Celery and RabbitMQ are being used as scheduling backend.
 
 
 ## Installation
@@ -71,8 +71,8 @@ Please install the following packages on to your favorite Linux distro.
 
 
 ## How to use Bacchus
-### 
 
+As you log in to Bacchus using the default URL, you need to navigate to RHEV-M/Ovirt -> Managers to introduce your oVirt to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for spontaneous backups or go to "Automation" pane and define a schedule.
 
 
 ## Contact Us
