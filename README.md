@@ -1,10 +1,8 @@
 # Open Bacchus 
-================
 Open Bacchus Project is a backup solution for oVirt/RHEV-M environment. It is being developed based on Python 2.7, Django 1.10 and oVirt Python SDK 4.1. Please be aware that it is still under development.
 Thank you for checking it out.
 
 ## Installation
-================
 ### Prerequisites
 Please install the following packages on to your favorite Linux distro.
 - Python 2.7.x
