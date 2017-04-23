@@ -7,7 +7,7 @@
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-database"></i> Total Managers</span>
-              <div class="count">3</div>
+              <div class="count">{{dash.manager_count}}</div>
               <span class="count_bottom"><i class="green">100% </i> Uptime </span>
             </div>          
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -17,12 +17,12 @@
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-desktop"></i> Virtual Machines</span>
-              <div class="count">529</div>
+              <div class="count">{{dash.vm_count}}</div>
               <span class="count_bottom"><i class="green">100% </i> Uptime </span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="glyphicon glyphicon-save-file"></i> Total Backup Size</span>
-              <div class="count green">2.5 TB</div>
+              <div class="count green">{{ dash.total_backup }} TB</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
 
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Capacity</span>
-              <div class="count">3 TB</div>
+              <div class="count">{{ dash.total_backup }} TB</div>
               <span class="count_bottom">From Last Day </span>
             </div>
           </div>

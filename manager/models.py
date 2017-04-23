@@ -42,7 +42,7 @@ class VM(models.Model):
 	updated     = models.DateTimeField()
 	status      = models.CharField(max_length=16)
 	protected   = models.BooleanField(default=False)
-	
+	size        = models.BigIntegerField(default=0)
 	
 
 class StorageDomain(models.Model):

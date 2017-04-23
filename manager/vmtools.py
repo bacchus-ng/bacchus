@@ -100,6 +100,8 @@ class VMTools:
                                        	myvm = VM.objects.get(vmid=vm.id)
                                        	myvm.updated = VMTools.local_now()
                                        	myvm.status = vm.status
+                                       	myvm.name = vm.name
+                                       	myvm.size = get_vm_size(myvm.cluster.datacenter.manager.name,myvm.name)
                                        	myvm.save()
                                 else:
                                 	
@@ -130,7 +132,7 @@ class VMTools:
 		else:		
 			return None
 		
-        """
+		"""
         Backup the VM on given manager
         """
 	@staticmethod
@@ -235,8 +237,28 @@ class VMTools:
 		
 		vm_backups.status = 0
 		vm_backups.end = VMTools.local_now()
-		vm_backups.save()		
-			
-                connection.close()
+		vm_backups.save()
+		connection.close()
+		return True
+	
+	@staticmethod
+	def manager_count():
+		return Manager.objects.count()
+	
+	@staticmethod
+	def host_count():
+		return 0
+	
+	@staticmethod
+	def vm_count():
+		return VM.objects.count()
+	
+	@staticmethod
+	def total_backup_size():
+		vmbackups = VmBackups.objects.all()
+		total_size = 0
+		for vmbackup in vmbackups:
+			total_size = total_size + vmbackup.size
+						
+		return float("{0:.2f}".format(total_size/1024.0/1024.0/1024.0/1024.0))
 
-                return True
