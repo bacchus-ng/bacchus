@@ -2,6 +2,16 @@
 Open Bacchus Project is a backup solution for oVirt/RHEV-M environment. It is being developed based on Python 2.7, Django 1.10 and oVirt Python SDK 4.1. Please be aware that it is still under development.
 Thank you for checking it out.
 
+## Preface
+Dear Open Bacchus User,
+
+Bacchus is an opensource backup solution for oVirt/RHEV-M. The backup mechanism behind the Bacchus relies on oVirt Python SDK. It basically creates a snapshot of a VM, clones a new VM from the snapshot with the prefix `bacchus_` and exports this cloned VM to default export domain of oVirt/RHEV-M. Snapshot and cloned VM is deleted after the backup is completed. Configuration of Export Domain is user's responsibility. If the domain is configured properly, Bacchus will detect it. No additional work required.
+
+The code may be lacking error handling in many cases for now. We are aware of it and will be covering the cases very soon. We need voluntary testers. Please drop an e-mail if you are interested.
+
+We use MariaDB as backend database, you may choose your own flavor but it is your responsibility to take care of it.
+
+
 ## Installation
 ### Prerequisites
 Please install the following packages on to your favorite Linux distro.
@@ -58,6 +68,12 @@ Please install the following packages on to your favorite Linux distro.
 - *[bacchus@localhost]$ ./start_bacchus*
 
 12. Access your Bacchus at http://your_hostname:8080/ with the user credentials set in step 10.
+
+
+## How to use Bacchus
+### 
+
+
 
 ## Contact Us
 
