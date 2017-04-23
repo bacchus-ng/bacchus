@@ -54,10 +54,12 @@ Please install the following packages on to your favorite Linux distro.
 - *[bacchus@localhost]$ python manage.py createsuperuser*
 
 11. Start Bacchus
-- *[bacchus@localhost]$ cd scripts*
+- `*[bacchus@localhost]$ cd scripts*`
 - *[bacchus@localhost]$ ./start_bacchus*
 
 12. Access your Bacchus at http://your_hostname:8080/ with the user credentials set in step 10.
+
+## Contact Us
 
 Please feel free to contact to openbacchus@gmail.com for any issues.
 
