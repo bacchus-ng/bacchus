@@ -1,0 +1,7 @@
+[2017-04-26 23:35:29,841: INFO/MainProcess] Connected to amqp://bacchus:**@127.0.0.1:5672/bacchus
+[2017-04-26 23:35:29,854: INFO/MainProcess] mingle: searching for neighbors
+[2017-04-26 23:35:30,882: INFO/MainProcess] mingle: all alone
+[2017-04-26 23:35:30,908: WARNING/MainProcess] /usr/lib/python2.7/site-packages/celery/fixups/django.py:202: UserWarning: Using settings.DEBUG leads to a memory leak, never use this setting in production environments!
+  warnings.warn('Using settings.DEBUG leads to a memory leak, never '
+[2017-04-26 23:35:30,908: INFO/MainProcess] celery@bacchus ready.
+[2017-04-26 23:35:38,658: INFO/MainProcess] Events of group {task} enabled by remote.

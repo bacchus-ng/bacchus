@@ -140,5 +140,7 @@ CELERY_BROKER_URL = 'amqp://bacchus:bacchus@localhost:5672/bacchus'
 
 CELERY_RESULT_BACKEND = 'django-db'
 
+SCRIPTS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'bacchus/scripts')
+BEAT_RESTART_SCRIPT = 'restart_beat.sh'
 
 # CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

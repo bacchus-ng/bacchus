@@ -1,0 +1,17 @@
+[I 170426 23:35:33 command:136] Visit me at http://localhost:5555
+[I 170426 23:35:33 command:141] Broker: amqp://bacchus:**@localhost:5672/bacchus
+[I 170426 23:35:33 command:144] Registered tasks: 
+    [u'bacchus.celery.debug_task',
+     u'celery.accumulate',
+     u'celery.backend_cleanup',
+     u'celery.chain',
+     u'celery.chord',
+     u'celery.chord_unlock',
+     u'celery.chunks',
+     u'celery.group',
+     u'celery.map',
+     u'celery.starmap',
+     u'manager.tasks.backup_vm',
+     u'manager.tasks.runInventory',
+     u'scheduler.tasks.run_schedule']
+[I 170426 23:35:33 mixins:224] Connected to amqp://bacchus:**@127.0.0.1:5672/bacchus

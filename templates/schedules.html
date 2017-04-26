@@ -11,11 +11,13 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+                  
+                  
 				    <table class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap" >
                       <thead>
                         <tr>                          
+                          <th>Schedule ID</th>
                           <th>Schedule Name</th>
-                          <th>VMs</th>
                           <th>Minute</th>
                           <th>Hour</th>
                           <th>Day of Month</th>
@@ -26,9 +28,12 @@
                       </thead>
                       <tbody>
                       	{% for sched in scheds %}
-                        <tr>                         
+                      	<form method="POST" class="post-form">
+                      	{% csrf_token %}
+                        <tr>
+                          <input type="hidden" name="sched_id" value="{{ sched.id }}">                         
+                          <td>{{ sched.id }}</td>
                           <td>{{ sched.name }}</td>
-                          <td>But</td>
                           <td>{{ sched.minute }}</td>
                           <td>{{ sched.hour }}</td>
                           <td>{{ sched.month }}</td>
@@ -36,15 +41,17 @@
                           <td>{{ sched.week }}</td>
                           <td>                          	
                           	<button type="submit" class="btn btn-warning btn-xs" >Modify</button>
-                          	<button type="submit" class="btn btn-danger btn-xs" type="submit" name="remove_levels" value="delete" >Delete</button>                          
+                          	<button type="submit" class="btn btn-danger btn-xs" type="submit" name="delete_sched" value="delete" data-target="#confirm-delete" data-toggle="modal">Delete</button>                          
                           </td>
                         </tr>
+                        </form>
                         {% endfor %}
                        
                       </tbody>
                     </table>
                   </div>
                   <button type="submit" class="save btn btn-info" onclick="window.location.href='/definesched/'" >Define a Schedule</button>
+                  
                 </div>
               </div>              
 	</div>	
