@@ -69,6 +69,7 @@ Please install the following packages on to your favorite Linux distro.
 
 12. Access your Bacchus at http://your_hostname:8080/ with the user credentials set in step 10.
 
+13. We strongly recommend you to configure a reverse proxy with SSL support enabled (e.g. nginx) as a front end to Bacchus.
 
 ## How to use Bacchus
 
