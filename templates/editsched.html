@@ -24,15 +24,15 @@
                   		Crontab <a href="#" data-html="true" data-toggle="tooltip" title="0 22 * * * - everyday at 22 <br>0 23 * * 0 - every Saturday at 23"><i class="fa fa-info-circle"></i></a>
 	 					<div class="well" style="overflow: auto">
 						
-               			<table id = "definesched" class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-               	            
+               			<table id = "editsched" class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+               	            <input type="hidden" name="sched_id" value="{{ sched.id }}">
 	  						<tr>
 	  							<td><label for="sel1">Minute<br>(0-59)</label></td>
 		  						<td><select class="form-control" name="sched_min">
 		  						{% for x in minutes %}
 		  						<option value="{{x}}" {% ifequal sched.minute  x|stringformat:"i" %} selected{% endifequal %}>{{x}}</option>
 		  						{% endfor %}
-		  												    									    									    				    							    							    
+		  						    									    									    				    							    							    
 							    </td>
 		  						<td><label for="sel1">Hour<br>(0-23)</label></td>
 		  						<td><select class="form-control" name="sched_hour" >
@@ -48,31 +48,16 @@
 							    </td>
 							    <td><label for="sel1">Month of Year<br>(1-12)</label></td>
 		  						<td><select class="form-control" name="sched_year">
-		  						<option value="*">*</option>		  			
-							    <option value="1">1 (Jan)</option>
-							    <option value="2">2 (Feb)</option>
-							    <option value="3">3 (Mar)</option>
-							    <option value="4">4 (Apr)</option>
-							    <option value="5">5 (May)</option>
-							    <option value="6">6 (Jun)</option>
-							    <option value="7">7 (Jul)</option>
-							    <option value="8">8 (Aug)</option>
-							    <option value="9">9 (Sep)</option>
-							    <option value="10">10 (Oct)</option>
-							    <option value="11">11 (Nov)</option>
-							    <option value="12">12 (Dec)</option>
-							    </td>
+		  						{% for x in months %}
+		  						<option value="{{x}}" {% ifequal sched.month  x|stringformat:"i" %} selected{% endifequal %}>{{x}}</option>
+		  						{% endfor %}
+		  						</td>
 							    <td><label for="sel1">Day of Week <br>(0-6)</label></td>
 		  						<td><select class="form-control" name="sched_week">
-		  						<option value="*">*</option>
-		  						<option value="0">0 (Sun)</option>
-							    <option value="1">1 (Mon)</option>
-							    <option value="2">2 (Tue)</option>
-							    <option value="3">3 (Wed)</option>
-							    <option value="4">4 (Thu)</option>
-							    <option value="5">5 (Fri)</option>
-							    <option value="6">6 (Sat)</option>
-							    </td>							    							    
+		  						{% for x in weekdays %}
+		  						<option value="{{x}}" {% ifequal sched.week  x|stringformat:"i" %} selected{% endifequal %}>{{x}}</option>
+		  						{% endfor %}
+		  						</td>							    							    
 							</tr>
 						  </select>
 						</table>
@@ -93,7 +78,7 @@
                       <tbody>
                       	{% for vm in vms %}
                         <tr>
-                          <td><input type="checkbox" class="flat" name="schedvmlist" value="{{vm.vmid}}"/>&nbsp;{{ vm.name}}</td>
+                          <td><input type="checkbox" class="flat" name="schedvmlist" {% if vm in backupvms %}checked {% endif %} value="{{vm.vmid}}"/>&nbsp;{{ vm.name}}</td>
                           <td>{{ vm.cluster.dc.manager.name}}</td>
                           <td>{{ vm.cluster.name}}</td>
                           <td>{{ vm.cluster.dc.name}}</td>
@@ -107,8 +92,9 @@
                     </table>
 						</div>
                   </div>
-                  <button type="submit" class="save btn btn-success">Save</button>
+                  <button type="submit" class="save btn btn-danger">Save</button>
                   </form>
+                  <button type="submit" class="btn btn-primary" onclick="window.location.href='/schedules/'" >Cancel</button>
                 </div>
               </div>              
 	</div>	
