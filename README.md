@@ -75,6 +75,9 @@ Please install the following packages on to your favorite Linux distro.
 
 As you log in to Bacchus using the default URL, you need to navigate to RHEV-M/Ovirt -> Managers to introduce your oVirt to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for spontaneous backups or go to "Automation" pane and define a schedule.
 
+## Restore
+
+Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's Import pane. You may use oVirt/RHEV-M to restore your VM.
 
 ## Contact Us
 
