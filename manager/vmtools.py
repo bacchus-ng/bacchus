@@ -101,7 +101,7 @@ class VMTools:
                                        	myvm.updated = VMTools.local_now()
                                        	myvm.status = vm.status
                                        	myvm.name = vm.name
-                                       	myvm.size = get_vm_size(myvm.cluster.datacenter.manager.name,myvm.name)
+                                       	myvm.size = VMTools.get_vm_size(myvm.cluster.dc.manager.name,myvm.name)
                                        	myvm.save()
                                 else:
                                 	
