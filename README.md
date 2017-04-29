@@ -79,6 +79,12 @@ As you log in to Bacchus using the default URL, you need to navigate to RHEV-M/O
 
 Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's Import pane. You may use oVirt/RHEV-M to restore your VM.
 
+## Demo
+
+http://demo.bacchus.co
+
+Please drop an e-mail for demo account.
+
 ## Contact Us
 
 Please feel free to contact to openbacchus@gmail.com for any issues.
