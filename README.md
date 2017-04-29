@@ -83,7 +83,9 @@ Bacchus "restore" functionality has not been implemented yet. VM backups will ap
 
 Please feel free to contact to openbacchus@gmail.com for any issues.
 
-You can also open issue on GitHub project page.
+Subscribe to our user mailing list to stay tuned http://bacchus.co/mailman/listinfo/users_bacchus.co
+
+You can also open an issue on GitHub project page.
 
 Hope you enjoy Open Bacchus !
 
