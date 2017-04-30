@@ -5,7 +5,7 @@ Thank you for checking it out.
 ## Preface
 Dear Open Bacchus User,
 
-Bacchus is an opensource backup solution for oVirt/RHEV-M. The backup mechanism behind the Bacchus relies on oVirt Python SDK. It basically creates a snapshot of a VM, clones a new VM from the snapshot with the prefix `bacchus_` and exports this cloned VM to default export domain of oVirt/RHEV-M. Snapshot and cloned VM is deleted after the backup is completed. Configuration of Export Domain is user's responsibility. If the domain is configured properly, Bacchus will detect it. No additional work required.
+Bacchus is an opensource backup solution for oVirt/RHEV-M. The backup mechanism behind the Bacchus relies on oVirt Python SDK. It basically creates a snapshot of a VM, clones a new VM from the snapshot with the prefix `bacchus_` and exports this cloned VM to default Export Domain of oVirt/RHEV-M. Snapshot and cloned VM is deleted after the backup is completed. Configuration of Export Domain is user's responsibility. If the domain is configured properly, Bacchus will detect it. No additional work required.
 
 The code may be lacking error handling in many cases for now. We are aware of it and will be covering the cases very soon. We need voluntary testers. Please drop an e-mail if you are interested.
 
@@ -77,7 +77,7 @@ As you log in to Bacchus using the default URL, you need to navigate to RHEV-M/O
 
 ## Restore
 
-Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's Import pane. You may use oVirt/RHEV-M to restore your VM.
+Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's "Import VM" pane. You may use oVirt/RHEV-M to restore your VM.
 
 ## Demo
 

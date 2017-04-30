@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from fernet_fields import EncryptedTextField
 import datetime
 
 
@@ -12,7 +13,7 @@ class Manager(models.Model):
 	fqdn        = models.CharField(max_length=256)
 	url         = models.CharField(max_length=512)
 	username    = models.CharField(max_length=64)
-	password    = models.CharField(max_length=64)
+	password    = EncryptedTextField()
 	version     = models.CharField(max_length=16)
 	discovered  = models.DateTimeField(editable=False)
 	updated     = models.DateTimeField()

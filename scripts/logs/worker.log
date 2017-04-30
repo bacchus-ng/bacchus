@@ -1,0 +1,69 @@
+[2017-04-29 20:17:06,563: INFO/MainProcess] Connected to amqp://bacchus:**@127.0.0.1:5672/bacchus
+[2017-04-29 20:17:06,594: INFO/MainProcess] mingle: searching for neighbors
+[2017-04-29 20:17:07,789: INFO/MainProcess] mingle: all alone
+[2017-04-29 20:17:07,829: WARNING/MainProcess] /usr/lib/python2.7/site-packages/kombu/pidbox.py:71: UserWarning: A node named celery@bacchus is already using this process mailbox!
+
+Maybe you forgot to shutdown the other node or did not do so properly?
+Or if you meant to start multiple nodes on the same host please make sure
+you give each node a unique node name!
+
+  warnings.warn(W_PIDBOX_IN_USE.format(node=self))
+[2017-04-29 20:17:07,83
+Restarting celery worker (/usr/bin/celery -A bacchus worker -l info --concurrency=16 -b amqp://bacchus:bacchus@localhost:5672/bacchus --workdir ../)
+
+worker: Warm shutdown (MainProcess)
+ 
+ -------------- celery@bacchus v4.0.2 (latentcall)
+---- **** ----- 
+--- * ***  * -- Linux-3.10.0-327.el7.x86_64-x86_64-with-redhat-7.2-Maipo 2017-04-29 19:43:13
+-- * - **** --- 
+- ** ---------- [config]
+- ** ---------- .> app:         bacchus:0x23cb990
+- ** ---------- .> transport:   amqp://bacchus:**@localhost:5672/bacchus
+- ** ---------- .> results:     
+- *** --- * --- .> concurrency: 16 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . bacchus.celery.debug_task
+  . manager.tasks.backup_vm
+  . manager.tasks.runInventory
+  . scheduler.tasks.run_schedule
+
+Traceback (most recent call last):
+  File "/usr/bin/celery", line 11, in <module>
+    sys.exit(main())
+  File "/usr/lib/python2.7/site-packages/celery/__main__.py", line 14, in main
+    _main()
+  File "/usr/lib/python2.7/site-packages/celery/bin/celery.py", line 326, in main
+    cmd.execute_from_commandline(argv)
+  File "/usr/lib/python2.7/site-packages/celery/bin/celery.py", line 488, in execute_from_commandline
+    super(CeleryCommand, self).execute_from_commandline(argv)))
+  File "/usr/lib/python2.7/site-packages/celery/bin/base.py", line 279, in execute_from_commandline
+    argv = self.setup_app_from_commandline(argv)
+  File "/usr/lib/python2.7/site-packages/celery/bin/base.py", line 481, in setup_app_from_commandline
+    self.app = self.find_app(app)
+  File "/usr/lib/python2.7/site-packages/celery/bin/base.py", line 503, in find_app
+    return find_app(app, symbol_by_name=self.symbol_by_name)
+  File "/usr/lib/python2.7/site-packages/celery/app/utils.py", line 355, in find_app
+    sym = symbol_by_name(app, imp=imp)
+  File "/usr/lib/python2.7/site-packages/celery/bin/base.py", line 506, in symbol_by_name
+    return imports.symbol_by_name(name, imp=imp)
+  File "/usr/lib/python2.7/site-packages/kombu/utils/imports.py", line 56, in symbol_by_name
+    module = imp(module_name, package=package, **kwargs)
+  File "/usr/lib/python2.7/site-packages/celery/utils/imports.py", line 101, in import_from_cwd
+    return imp(module, package=package)
+  File "/usr/lib64/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+ImportError: No module named bacchus
+ "/usr/lib/python2.7/site-packages/kombu/utils/imports.py", line 56, in symbol_by_name
+    module = imp(module_name, package=package, **kwargs)
+  File "/usr/lib/python2.7/site-packages/celery/utils/imports.py", line 101, in import_from_cwd
+    return imp(module, package=package)
+  File "/usr/lib64/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+ImportError: No module named bacchus

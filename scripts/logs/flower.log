@@ -1,0 +1,44 @@
+[I 170429 20:17:12 command:136] Visit me at http://localhost:5555
+[I 170429 20:17:12 command:141] Broker: amqp://bacchus:**@localhost:5672/bacchus
+[I 170429 20:17:12 command:144] Registered tasks: 
+    [u'bacchus.celery.debug_task',
+     u'celery.accumulate',
+     u'celery.backend_cleanup',
+     u'celery.chain',
+     u'celery.chord',
+     u'celery.chord_unlock',
+     u'celery.chunks',
+     u'celery.group',
+     u'celery.map',
+     u'celery.starmap',
+     u'manager.tasks.backup_vm',
+     u'manager.tasks.runInventory',
+     u'scheduler.tasks.run_schedule']
+Traceback (most recent call last):
+  File "/usr/bin/celery", line 11, in <module>
+   [I 170429 20:29:03 command:47] SIGTERM detected, shutting down
+ry/__main__.py", line 14, in main
+    _main()
+  File "/usr/lib/python2.7/site-packages/celery/bin/celery.py", line 326, in main
+    cmd.execute_from_commandline(argv)
+  File "/usr/lib/python2.7/site-packages/celery/bin/celery.py", line 488, in execute_from_commandline
+    super(CeleryCommand, self).execute_from_commandline(argv)))
+  File "/usr/lib/python2.7/site-packages/celery/bin/base.py", line 281, in execute_from_commandline
+    return self.handle_argv(self.prog_name, argv[1:])
+  File "/usr/lib/python2.7/site-packages/celery/bin/celery.py", line 480, in handle_argv
+    return self.execute(command, argv)
+  File "/usr/lib/python2.7/site-packages/celery/bin/celery.py", line 412, in execute
+    ).run_from_argv(self.prog_name, argv[1:], command=argv[0])
+  File "/usr/lib/python2.7/site-packages/flower/command.py", line 54, in run_from_argv
+    flower.start()
+  File "/usr/lib/python2.7/site-packages/flower/app.py", line 52, in start
+    xheaders=self.options.xheaders)
+  File "/usr/lib64/python2.7/site-packages/tornado/web.py", line 1788, in listen
+    server.listen(port, address)
+  File "/usr/lib64/python2.7/site-packages/tornado/tcpserver.py", line 126, in listen
+    sockets = bind_sockets(port, address=address)
+  File "/usr/lib64/python2.7/site-packages/tornado/netutil.py", line 187, in bind_sockets
+    sock.bind(sockaddr)
+  File "/usr/lib64/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
