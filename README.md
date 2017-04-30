@@ -23,6 +23,7 @@ Please install the following packages on to your favorite Linux distro.
 ### Installation Steps
 1. Install django framework 1.10.x
 - *pip install django==1.10.6*
+- *pip install django-fernet-fields   (provides encryption in database)
 
 2. Install oVirt Python SDK
 - *pip install ovirt-engine-sdk-python==4.1.2*
