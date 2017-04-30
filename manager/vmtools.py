@@ -26,11 +26,23 @@ class VMTools:
 	Connect to Manager with the given name and return connection
 	"""
 	@staticmethod
-	def connect_to_rhevm(manager):
-		rhevm = Manager.objects.get(name=manager)
+	def connect_to_rhevm(manager_name):
+		rhevm = Manager.objects.get(name=manager_name)
+
 		connection = sdk.Connection(url=str(rhevm.url), username=str(rhevm.username), password=str(rhevm.password), insecure=True )
 		return connection
+
+		
 	
+	@staticmethod
+	def verify_manager_connection(manager):
+		try:
+			connection = sdk.Connection(url=str(manager.url), username=str(manager.username), password=str(manager.password), insecure=True )
+			connectin.close()
+			return True
+		except Exception as e:
+			return False
+		
 	"""
 	DC discovery function, retrieve all managers from database and query all datacenter information
 	"""
@@ -262,3 +274,6 @@ class VMTools:
 						
 		return float("{0:.2f}".format(total_size/1024.0/1024.0/1024.0/1024.0))
 
+		
+
+	

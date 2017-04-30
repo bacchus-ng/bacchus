@@ -21,15 +21,22 @@ def list_managers():
 
 @login_required(login_url="/login/")
 def managers(request):
+    if request.method == "POST":
+        return redirect('/edit_manager/'+request.POST.get('manager_id'))
+    else:
         managers = Manager.objects.all()
         return render(request,'managers.html',{'managers': managers })
 
 @login_required(login_url="/login/")
 def add_manager(request):
         if request.method == "POST":
-            form = ManagerForm(request.POST)
-            if (form.is_valid()):
-                manager = form.save(commit=False)                
+            manager = Manager()
+            manager.name = request.POST.get('manager_name')
+            manager.fqdn = request.POST.get('manager_fqdn')
+            manager.url = request.POST.get('manager_url')
+            manager.username = request.POST.get('manager_username')
+            manager.password = request.POST.get('manager_password')            
+            if request.POST.get('manager_save'):
                 manager.version = "4.0"
                 manager.discovered = VMTools.local_now()
                 manager.updated = VMTools.local_now()
@@ -37,12 +44,50 @@ def add_manager(request):
                 VMTools.run_dc_inv()
                 VMTools.run_cluster_inv()
                 VMTools.run_vm_inv()
-                return redirect('/managers/',)
-            
+                return redirect('/managers/')
+            elif request.POST.get('manager_verify'):
+                               
+                if VMTools.verify_manager_connection(manager):
+                    verified = True
+                else:
+                    verified = False
+                
+                return render(request, 'add_manager.html', {'manager': manager , 'verified':verified })
+            else:
+                return redirect('/managers/')
+                
         else:
-            manager = ManagerForm()
-            
-        return render(request, 'add_manager.html', {'manager': manager}) 
+            return render(request, 'add_manager.html') 
+    
+@login_required(login_url="/login/")
+def edit_manager(request,manager_id):
+        if request.method == "GET":
+            manager = Manager.objects.get(id=manager_id)
+            return render(request, 'edit_manager.html', {'manager': manager})
+
+        else:
+            manager = Manager.objects.get(id=request.POST.get('manager_id'))
+            manager.name = request.POST.get('manager_name')
+            manager.fqdn = request.POST.get('manager_fqdn')
+            manager.url = request.POST.get('manager_url')
+            manager.username = request.POST.get('manager_username')
+            manager.password = request.POST.get('manager_password')            
+                
+            if request.POST.get('manager_save'):                
+                manager.save()
+                return redirect('/managers/')
+            elif request.POST.get('manager_verify'):
+                               
+                if VMTools.verify_manager_connection(manager):
+                    verified = True
+                else:
+                    verified = False
+                
+                return render(request, 'edit_manager.html', {'manager': manager , 'verified':verified })
+            else:
+                return redirect('/managers/')
+                
+             
 
 @login_required(login_url="/login/")
 def list_vms(request):

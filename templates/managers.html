@@ -12,7 +12,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<table class="table table-hover table-striped jambo_table bulk_action">
+				<table class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap">
 					<thead>
                         <tr>                          
                           <th>Name</th>
@@ -21,19 +21,27 @@
                           <th>Version</th>
                           <th>Discovery Date</th>
                           <th>Last Update</th>
+                          <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                       	{% for rhvm in managers %}
-                      		                      
+                      	<form method="POST" class="post-form">
+                      	{% csrf_token %}	                      
                         <tr>
+                          <input type="hidden" name="manager_id" value="{{ rhvm.id }}"> 
                           <td>{{ rhvm.name}}</td>
                           <td>{{ rhvm.fqdn}}</td>
                           <td>{{ rhvm.url}}</td>
                           <td>{{ rhvm.version}}</td>
                           <td>{{ rhvm.discovered}}</td>
                           <td>{{ rhvm.updated}}</td>
+                          <td>                          	
+                          	<button type="submit" class="btn btn-warning btn-xs" onclick="window.location.href='/edit_manager/'" name="edit_manager" value="edit">Modify</button>
+                          	                          
+                          </td>
                         </tr>
+                        </form>
                         {% endfor %}
                      </tbody>
                   </table>
