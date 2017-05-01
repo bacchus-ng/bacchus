@@ -24,7 +24,7 @@ Please install the following packages on to your favorite Linux distro.
 1. Install django framework 1.10.x
 - *pip install django==1.10.6*
 - *pip install django-fernet-fields   (provides encryption in database)*
-
+\* *Due to security reasons, we strongly recommend you change the SECRET_KEY value in settings.py*
 2. Install oVirt Python SDK
 - *pip install ovirt-engine-sdk-python==4.1.2*
 
@@ -59,7 +59,7 @@ Please install the following packages on to your favorite Linux distro.
 - *python manage.py migrate*
 
 9. Add your host into Django settings.py
-- in bacchus/settings.py change the line ALLOWED_HOSTS = [""] to ALLOWED_HOSTS = ["your_hostname"]
+- in bacchus/settings.py change the line ALLOWED_HOSTS = ["bacchus"] to ALLOWED_HOSTS = ["your_hostname"]
 
 10. Create Bacchus admin account
 - *[bacchus@localhost]$ python manage.py createsuperuser*
