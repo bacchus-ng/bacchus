@@ -29,7 +29,7 @@
                       	<form method="POST" class="post-form">
                       	{% csrf_token %}	                      
                         <tr>
-                          <input type="hidden" name="manager_id" value="{{ rhvm.id }}"> 
+                          <input type="hidden" name="manager_id" id="manager_id" value="{{ rhvm.id }}"> 
                           <td>{{ rhvm.name}}</td>
                           <td>{{ rhvm.fqdn}}</td>
                           <td>{{ rhvm.url}}</td>
@@ -38,7 +38,8 @@
                           <td>{{ rhvm.updated}}</td>
                           <td>                          	
                           	<button type="submit" class="btn btn-warning btn-xs" onclick="window.location.href='/edit_manager/'" name="edit_manager" value="edit">Modify</button>
-                          	                          
+                          	<button type="button" onClick="unhideDelete('delete_manager_{{rhvm.id}}');" class="btn btn-danger btn-xs" id="hide_delete_{{rhvm.id}}" name="hide_delete_{{rhvm.id}}" value="hide_delete">Delete</button>
+                            <button type="submit" onClick="return confirm('Are you sure you want to delete this manager ?\n\n{{ rhvm.name }}\n\n This will delete all objects under this manager.');" class="btn btn-danger btn-xs" style="visibility: hidden;" id="delete_manager_{{rhvm.id}}" name="delete_manager_{{rhvm.id}}" value="delete">YES</button>
                           </td>
                         </tr>
                         </form>
@@ -51,6 +52,18 @@
 		</div>
 	</div>	
 </div>
+
+<script>
+    var hidden = true;
+    function unhideDelete(delete_manager) {
+        hidden = !hidden;
+        if(hidden) {
+            document.getElementById(delete_manager).style.visibility = 'hidden';
+        } else {
+            document.getElementById(delete_manager).style.visibility = 'visible';
+        }
+    }
+</script>
 
 {% endblock%}
 

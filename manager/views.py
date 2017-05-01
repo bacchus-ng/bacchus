@@ -22,7 +22,13 @@ def list_managers():
 @login_required(login_url="/login/")
 def managers(request):
     if request.method == "POST":
-        return redirect('/edit_manager/'+request.POST.get('manager_id'))
+        manager_id = request.POST.get('manager_id')
+        if request.POST.get('delete_manager_'+manager_id) == "delete":
+            manager = Manager.objects.get(id=manager_id)
+            manager.delete()
+            return redirect('/managers/')
+        else:
+            return redirect('/edit_manager/'+request.POST.get('manager_id'))
     else:
         managers = Manager.objects.all()
         return render(request,'managers.html',{'managers': managers })
