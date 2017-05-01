@@ -3,12 +3,20 @@
 
 {% block content %}
 
+
+
  <div class="row">
               <div class="">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Define a Schedule<small></small></h2>
                     <div class="clearfix"></div>
+                    {% if sched_exists %}
+						<div class="alert alert-info alert-dismissable">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  							<strong>Warning!</strong> Schedule with the name <strong>{{sched_name}}</strong> already exists.
+						</div>
+					{% endif%}
                   </div>
                   <div class="x_content">
                   <form method="POST" class="post-form">

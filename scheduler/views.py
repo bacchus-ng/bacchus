@@ -38,7 +38,7 @@ def list_sched(request):
             sched.delete()
             CeleryTools.restart_beat()
         else:
-            return redirect('/editsched/'+request.POST.get('sched_id'))
+            return redirect('/editsched/'+request.POST.get('sched_id')+'/initial')
         
     scheds = Schedule.objects.all()
     
@@ -49,6 +49,11 @@ def define_sched(request):
     if request.method == "POST":
         
         sched_name = request.POST.get('sched_name')
+        if CeleryTools.schedule_exists(sched_name):
+            sched_exists = True
+            vms = VM.objects.all()
+            return render(request,'definesched.html',{'vms': vms, 'sched_name':sched_name,'sched_exists':sched_exists })
+        
         sched_min = request.POST.get('sched_min')
         sched_hour = request.POST.get('sched_hour')
         sched_week = request.POST.get('sched_week')
@@ -78,7 +83,8 @@ def define_sched(request):
 
     else:
         vms = VM.objects.all()
-        return render(request,'definesched.html',{'vms': vms })
+        sched_exists = False
+        return render(request,'definesched.html',{'vms': vms,'sched_exists':sched_exists })
 
 
 @login_required(login_url="/login/")
@@ -87,16 +93,7 @@ def list_maint(request):
     return render(request,'listmaint.html',{'list_maint': list_maint })
 
 @login_required(login_url="/login/")
-def delete_sched(request):
-    if request.method == "POST":
-        sched_id = request.POST.get('sched_id')
-        
-    scheds = Schedule.objects.all()
-    return render(request,'schedules.html',{'scheds': scheds })
-
-
-@login_required(login_url="/login/")
-def edit_sched(request, sched_id):
+def edit_sched(request, sched_id, sched_exists):
     if request.method == "GET":               
         sched = Schedule.objects.get(id=sched_id)
         minutes = range(0,60)
@@ -114,12 +111,18 @@ def edit_sched(request, sched_id):
         backupscheds = BackupSchedule.objects.all().filter(schedule=sched)
         for backupsched in backupscheds:
             backupvms.append(backupsched.vm)
+        
+        
             
-        return render(request,'editsched.html',{'vms':vms,'backupvms':backupvms,'sched': sched,'minutes': minutes, 'hours': hours, 'days':days, 'months':months, 'weekdays':weekdays })
+        return render(request,'editsched.html',{'vms':vms,'sched_exists':sched_exists, 'backupvms':backupvms,'sched': sched,'minutes': minutes, 'hours': hours, 'days':days, 'months':months, 'weekdays':weekdays })
     else:
         sched_id = request.POST.get('sched_id')
         sched = Schedule.objects.get(id=sched_id)
-
+        # check new name already exists ?
+        sched_name = request.POST.get('sched_name')
+        if (sched_name != sched.name) and (CeleryTools.schedule_exists(sched_name)):            
+            return redirect('/editsched/'+sched_id+'/exists')
+            
         # invalidate current backup schedules
         backupscheds = BackupSchedule.objects.all().filter(schedule=sched)
         for backupsched in backupscheds:
