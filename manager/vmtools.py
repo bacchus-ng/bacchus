@@ -35,13 +35,9 @@ class VMTools:
 		
 	
 	@staticmethod
-	def verify_manager_connection(manager):
-		try:
-			connection = sdk.Connection(url=str(manager.url), username=str(manager.username), password=str(manager.password), insecure=True )
-			connectin.close()
-			return True
-		except Exception as e:
-			return False
+	def verify_manager_connection(manager):		
+		connection = sdk.Connection(url=str(manager.url), username=str(manager.username), password=str(manager.password), insecure=True )
+		return connection.test()
 		
 	"""
 	DC discovery function, retrieve all managers from database and query all datacenter information

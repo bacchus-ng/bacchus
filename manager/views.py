@@ -16,9 +16,6 @@ from tasks import *
 from .forms import ManagerForm
 
 
-def list_managers():
-        return Manager.objects.all()
-
 @login_required(login_url="/login/")
 def managers(request):
     if request.method == "POST":
@@ -53,10 +50,7 @@ def add_manager(request):
                 return redirect('/managers/')
             elif request.POST.get('manager_verify'):
                                
-                if VMTools.verify_manager_connection(manager):
-                    verified = True
-                else:
-                    verified = False
+                verified = VMTools.verify_manager_connection(manager)
                 
                 return render(request, 'add_manager.html', {'manager': manager , 'verified':verified })
             else:
@@ -84,11 +78,8 @@ def edit_manager(request,manager_id):
                 return redirect('/managers/')
             elif request.POST.get('manager_verify'):
                                
-                if VMTools.verify_manager_connection(manager):
-                    verified = True
-                else:
-                    verified = False
-                
+                verified = VMTools.verify_manager_connection(manager)
+                 
                 return render(request, 'edit_manager.html', {'manager': manager , 'verified':verified })
             else:
                 return redirect('/managers/')
