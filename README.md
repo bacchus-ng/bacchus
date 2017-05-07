@@ -24,10 +24,10 @@ Please install the following packages on to your favorite Linux distro.
 1. Install django framework 1.10.x
 - *pip install django==1.10.6*
 - *pip install django-fernet-fields   (provides encryption in database)* <br />
-\* *Due to security reasons, we strongly recommend you change the SECRET_KEY value in settings.py*
+\* *Due to security reasons, we strongly recommend you change the SECRET_KEY value in settings.py*<br />
 \* *On Centos/RHEL 7, gcc, openssl-devel and python-devel is needed to compile dependencies!*
 2. Install oVirt Python SDK
-- *pip install ovirt-engine-sdk-python==4.1.2*
+- *pip install ovirt-engine-sdk-python==4.1.2*<br />
 \* *On Centos/RHEL 7, libxml2-devel is needed in order to compile dependencies*
 
 3. Install Python MySQL support
