@@ -15,7 +15,7 @@ We use MariaDB as backend database, you may choose your own flavor but it is you
 ## Installation
 ### Prerequisites
 Please install the following packages on to your favorite Linux distro.
-- Python 2.7.x
+- Python 2.7.x 
 - pip
 - MariaDB
 - RabbitMQ
@@ -24,12 +24,16 @@ Please install the following packages on to your favorite Linux distro.
 1. Install django framework 1.10.x
 - *pip install django==1.10.6*
 - *pip install django-fernet-fields   (provides encryption in database)* <br />
-\* *Due to security reasons, we strongly recommend you change the SECRET_KEY value in settings.py*
+\* *Due to security reasons, we strongly recommend you change the SECRET_KEY value in settings.py*<br />
+\* *On Centos/RHEL 7, gcc, openssl-devel and python-devel is needed to compile dependencies!*
 2. Install oVirt Python SDK
-- *pip install ovirt-engine-sdk-python==4.1.2*
+- *pip install ovirt-engine-sdk-python==4.1.2*<br />
+\* *On Centos/RHEL 7, libxml2-devel is needed in order to compile dependencies*
 
 3. Install Python MySQL support
 - *pip install MySQL-python*
+\* *On Centos/RHEL 7, mariadb-devel is needed in order to compile dependencies*
+
 
 4. Install Celery
 - *pip install celery==4.0.2*
@@ -66,7 +70,7 @@ Please install the following packages on to your favorite Linux distro.
 
 11. Start Bacchus
 - *[bacchus@localhost]$ cd scripts*
-- *[bacchus@localhost]$ ./start_bacchus*
+- *[bacchus@localhost]$ ./start_bacchus.sh*
 
 12. Access your Bacchus at http://your_hostname:8080/ with the user credentials set in step 10.
 
