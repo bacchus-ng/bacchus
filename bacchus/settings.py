@@ -25,7 +25,7 @@ SECRET_KEY = 'c+x@xt###ym^1v#c401cn@z9xi@8tkdpx^=u3-zzkk35rv%66$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["bacchus"]
+ALLOWED_HOSTS = ["*"]
 
  
  

@@ -34,6 +34,14 @@ class Cluster(models.Model):
 	discovered  = models.DateTimeField(editable=False)
 	updated     = models.DateTimeField()
 
+class Host(models.Model):
+	id          = models.AutoField(primary_key=True)
+	hostid      = models.CharField(max_length=128,null=True)
+	name        = models.CharField(max_length=256)
+	cluster     = models.ForeignKey('Cluster')
+	discovered  = models.DateTimeField(editable=False)
+	updated     = models.DateTimeField()
+	
 class VM(models.Model):
 	id          = models.AutoField(primary_key=True)
 	cluster     = models.ForeignKey('Cluster')

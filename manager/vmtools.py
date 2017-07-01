@@ -94,6 +94,12 @@ class VMTools:
 	"""
 	VM discovery function, retrieve all managers from database and query all virtual machine information
 	"""
+	@staticmethod
+	def run_host_inv():
+		
+		
+		return True
+	
         @staticmethod
         def run_vm_inv():
                 rhevmlist = Manager.objects.all()
@@ -255,7 +261,7 @@ class VMTools:
 	
 	@staticmethod
 	def host_count():
-		return 0
+		return Host.objects.count()
 	
 	@staticmethod
 	def vm_count():
