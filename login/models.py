@@ -9,3 +9,5 @@ class Dashboard(models.Model):
     host_count      =  models.IntegerField(default=0)
     vm_count        =  models.IntegerField(default=0)
     total_backup    =  models.FloatField()
+    total_capacity  =  models.FloatField()
+    success_rate    =  models.IntegerField(default=100)

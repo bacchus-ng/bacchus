@@ -7,7 +7,7 @@
 """
 import time
 import sys
-import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from models import *
 import ovirtsdk4 as sdk
@@ -131,6 +131,16 @@ class VMTools:
                         connection.close()
 
 		return True
+	@staticmethod
+	def backup_success_rate():
+		
+		tot_back = VmBackups.objects.all().filter(start__gte = (datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1))).count()
+		suc_back = VmBackups.objects.all().filter(start__gte = (datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)), status=0).count()
+		if tot_back > 0:			
+			srate = int((float(suc_back)/float(tot_back))*100)
+			return srate
+		return 0
+
 
 	@staticmethod
 	def get_export_domain(manager):

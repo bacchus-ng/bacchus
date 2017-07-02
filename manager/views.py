@@ -38,7 +38,7 @@ def add_manager(request):
             manager.fqdn = request.POST.get('manager_fqdn')
             manager.url = request.POST.get('manager_url')
             manager.username = request.POST.get('manager_username')
-            manager.password = request.POST.get('manager_password')            
+            manager.password = request.POST.get('manager_password')      
             if request.POST.get('manager_save'):
                 manager.version = "4.0"
                 manager.discovered = VMTools.local_now()
