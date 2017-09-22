@@ -1,11 +1,11 @@
 # Open Bacchus 
-Open Bacchus Project is a backup solution for oVirt/RHEV-M environment. It is being developed based on Python 2.7, Django 1.10 and oVirt Python SDK 4.1. Please be aware that it is still under development.
+Open Bacchus Project is a backup solution for oVirt/RHEV environment. It is being developed based on Python 2.7, Django 1.10 and oVirt Python SDK 4.1. Please be aware that it is still under development.
 Thank you for checking it out.
 
 ## Preface
 Dear Open Bacchus User,
 
-Bacchus is an opensource backup solution for oVirt/RHEV-M. The backup mechanism behind the Bacchus relies on oVirt Python SDK. It basically creates a snapshot of a VM, clones a new VM from the snapshot with the prefix `bacchus_` and exports this cloned VM to default Export Domain of oVirt/RHEV-M. Snapshot and cloned VM is deleted after the backup is completed. Configuration of Export Domain is user's responsibility. If the domain is configured properly, Bacchus will detect it. No additional work required.
+Bacchus is an opensource backup solution for oVirt/RHEV. The backup mechanism behind the Bacchus relies on oVirt Python SDK. It basically creates a snapshot of a VM, clones a new VM from the snapshot with the prefix `bacchus_` and exports this cloned VM to default Export Domain of oVirt/RHEV. Snapshot and cloned VM is deleted after the backup is completed. Configuration of Export Domain is user's responsibility. If the domain is configured properly, Bacchus will detect it. No additional work required.
 
 The code may be lacking error handling in many cases for now. We are aware of it and will be covering the cases very soon. We need voluntary testers. Please drop an e-mail if you are interested.
 
@@ -78,11 +78,11 @@ Please install the following packages on to your favorite Linux distro.
 
 ## How to use Bacchus
 
-As you log in to Bacchus using the default URL, you need to navigate to RHEV-M/Ovirt -> Managers to introduce your oVirt to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for spontaneous backups or go to "Automation" pane and define a schedule.
+As you log in to Bacchus using the default URL, you need to navigate to RHEV/Ovirt -> Managers to introduce your oVirt to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for spontaneous backups or go to "Automation" pane and define a schedule.
 
 ## Restore
 
-Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's "Import VM" pane. You may use oVirt/RHEV-M to restore your VM.
+Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's "Import VM" pane. You may use oVirt/RHEV to restore your VM.
 
 ## Demo
 
