@@ -63,18 +63,21 @@ Please install the following packages on to your favorite Linux distro.
 - *python manage.py migrate*
 
 9. Add your host into Django settings.py
-- in bacchus/settings.py change the line ALLOWED_HOSTS = ["bacchus"] to ALLOWED_HOSTS = ["your_hostname"]
+- in bacchus/settings.py file change the line ALLOWED_HOSTS = ["bacchus"] to ALLOWED_HOSTS = ["your_hostname"]
 
-10. Create Bacchus admin account
+10. Change the timezone
+- in bacchus/settings.py file change the TIME_ZONE parameter to your timezone.
+
+11. Create Bacchus admin account
 - *[bacchus@localhost]$ python manage.py createsuperuser*
 
-11. Start Bacchus
+12. Start Bacchus
 - *[bacchus@localhost]$ cd scripts*
 - *[bacchus@localhost]$ ./start_bacchus.sh*
 
-12. Access your Bacchus at http://your_hostname:8080/ with the user credentials set in step 10.
+13. Access your Bacchus at http://your_hostname:8080/ with the user credentials set in step 10.
 
-13. We strongly recommend you to configure a reverse proxy with SSL support enabled (e.g. nginx) as a front end to Bacchus.
+14. We strongly recommend you to configure a reverse proxy with SSL support enabled (e.g. nginx) as a front end to Bacchus.
 
 ## How to use Bacchus
 
