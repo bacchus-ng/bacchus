@@ -1,10 +1,10 @@
+SCRIPTPATH=$(cd $(dirname $0) ; pwd -P)
 echo "Restarting Bacchus services."
 
-
-./stop_server.sh
-./stop_celery.sh
+${SCRIPTPATH}/stop_server.sh
+${SCRIPTPATH}/stop_celery.sh
 
 sleep 3
 
-./start_celery.sh
-./start_server.sh
+${SCRIPTPATH}/start_celery.sh
+${SCRIPTPATH}/start_server.sh

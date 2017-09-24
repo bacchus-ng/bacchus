@@ -1,4 +1,5 @@
-./stop_beat.sh
+SCRIPTPATH=$(cd $(dirname $0) ; pwd -P)
+${SCRIPTPATH}/stop_beat.sh
 sleep 1
-./start_beat.sh
+${SCRIPTPATH}/start_beat.sh
 

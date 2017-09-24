@@ -1,10 +1,10 @@
+SCRIPTPATH=$(cd $(dirname $0) ; pwd -P)
 echo "Starting Celery worker"
-sh worker.sh
+sh ${SCRIPTPATH}/worker.sh
 sleep 2
 echo "Starting Celery Beat"
-sh start_beat.sh
+sh ${SCRIPTPATH}/start_beat.sh
 sleep 2
 echo "Starting Celery Flower"
-sh flower.sh
-
+sh ${SCRIPTPATH}/flower.sh
 
