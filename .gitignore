@@ -1,1 +1,3 @@
 *.pyc
+celerybeat.pid
+scripts/logs/
