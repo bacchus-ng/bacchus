@@ -20,64 +20,90 @@ Please install the following packages on to your favorite Linux distro.
 - MariaDB
 - RabbitMQ
 
+For CentOS 7:
+```bash
+yum groupinstall 'Development Tools'
+yum install libxml2-devel python-devel python-pip mariadb-devel mariadb-server rabbitmq-server
+```
+
 ### Installation Steps
-1. Install django framework 1.10.x
-- *pip install django==1.10.6*
-- *pip install django-fernet-fields   (provides encryption in database)* <br />
-\* *Due to security reasons, we strongly recommend you change the SECRET_KEY value in settings.py*<br />
-\* *On Centos/RHEL 7, gcc, openssl-devel and python-devel is needed to compile dependencies!*
-2. Install oVirt Python SDK
-- *pip install ovirt-engine-sdk-python==4.1.2*<br />
-\* *On Centos/RHEL 7, libxml2-devel is needed in order to compile dependencies*
+1. Install django framework 1.10.x    
+`django-fernet-fields` provides encryption in database.    
+*For security, we strongly recommend you change the SECRET_KEY value in settings.py*    
+```bash
+pip install django==1.10.6
+pip install django-fernet-fields
+```
 
-3. Install Python MySQL support
-- *pip install MySQL-python*
-\* *On Centos/RHEL 7, mariadb-devel is needed in order to compile dependencies*
+2. Install oVirt Python SDK    
+```bash
+pip install ovirt-engine-sdk-python==4.1.2
+```
 
+3. Install Python MySQL support    
+```bash
+pip install MySQL-python
+```
 
-4. Install Celery
-- *pip install celery==4.0.2*
-- *pip install django-celery-beat*
-- *pip install django-celery-results*
-- *pip install flower*
+4. Install Celery    
+```bash
+pip install celery==4.0.2
+pip install django-celery-beat
+pip install django-celery-results
+pip install flower
+```
 
-5. Create bacchus database and user on MariaDB
-- *create database bacchus;*
-- *grant all on bacchus.\* to bacchus@localhost identified by 'bacchus';*
+5. Create bacchus database and user on MariaDB    
+```sql
+create database bacchus;
+grant all on bacchus.\* to bacchus@localhost identified by 'bacchus';
+```
 
-6. Create bacchus user on RabbitMQ (run the following commands with root user)
-- *rabbitmqctl add_user bacchus bacchus*
-- *rabbitmqctl add_vhost bacchus*
-- *rabbitmqctl set_user_tags bacchus Administrator*
-- *rabbitmqctl set_permissions -p bacchus bacchus ".\*" ".\*" ".\*"*
+6. Create bacchus user on RabbitMQ (run the following commands with root user)    
+```bash
+rabbitmqctl add_user bacchus bacchus
+rabbitmqctl add_vhost bacchus
+rabbitmqctl set_user_tags bacchus Administrator
+rabbitmqctl set_permissions -p bacchus bacchus ".\*" ".\*" ".\*"
+```
 
-6. Create bacchus user and group on Linux
-- *useradd bacchus*
+6. Create bacchus user and group on Linux    
+```bash
+useradd bacchus
+```
 
-7. Login with bacchus user and get the Bacchus code from git repository
-- *[bacchus@localhost]$ git clone https://github.com/openbacchus/bacchus.git*
+7. Login with bacchus user and get the Bacchus code from git repository    
+```nash
+git clone https://github.com/openbacchus/bacchus.git
+```
 
-8. Create the Bacchus Database layout 
-- *cd bacchus*
-- *python manage.py check*
-- *python manage.py migrate*
+8. Create the Bacchus Database layout    
+```bash
+cd bacchus
+python manage.py check
+python manage.py migrate
+```
 
-9. Add your host into Django settings.py
-- in bacchus/settings.py file change the line ALLOWED_HOSTS = ["bacchus"] to ALLOWED_HOSTS = ["your_hostname"]
+9. Add your host into Django `settings.py`    
+- in `bacchus/settings.py` change the line `ALLOWED_HOSTS = ["bacchus"]` to `ALLOWED_HOSTS = ["your_hostname"]`
 
-10. Change the timezone
-- in bacchus/settings.py file change the TIME_ZONE parameter to your timezone.
+10. Change the timezone    
+- in `bacchus/settings.py` change the TIME_ZONE parameter to your timezone.
 
-11. Create Bacchus admin account
-- *[bacchus@localhost]$ python manage.py createsuperuser*
+11. Create Bacchus admin account    
+```bash
+python manage.py createsuperuser
+```
 
-12. Start Bacchus
-- *[bacchus@localhost]$ cd scripts*
-- *[bacchus@localhost]$ ./start_bacchus.sh*
+12. Start Bacchus    
+```bash
+bacchus/scripts/start_bacchus.sh
+```
 
-13. Access your Bacchus at http://your_hostname:8080/ with the user credentials set in step 10.
+13. Access your Bacchus at `http://your_hostname:8080/`    
+Login with the user credentials set in step 10.
 
-14. We strongly recommend you to configure a reverse proxy with SSL support enabled (e.g. nginx) as a front end to Bacchus.
+14. We strongly recommend you to configure a reverse proxy with SSL support enabled (e.g. apache/nginx) as a front end to Bacchus.
 
 ## How to use Bacchus
 
@@ -91,7 +117,7 @@ Bacchus "restore" functionality has not been implemented yet. VM backups will ap
 
 http://demo.bacchus.co
 
-Please drop an e-mail for demo account.
+Please send us an e-mail for demo account.
 
 ## Contact Us
 
