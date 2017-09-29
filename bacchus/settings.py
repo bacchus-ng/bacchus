@@ -144,3 +144,9 @@ SCRIPTS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'bacchus/scripts')
 BEAT_RESTART_SCRIPT = 'restart_beat.sh'
 
 # CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# Session management and timeout
+# https://docs.djangoproject.com/en/1.10/topics/http/sessions/
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 5 * 60
