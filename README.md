@@ -109,6 +109,15 @@ Login with the user credentials set in step 10.
 
 As you log in to Bacchus using the default URL, you need to navigate to RHEV/Ovirt -> Managers to introduce your oVirt to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for spontaneous backups or go to "Automation" pane and define a schedule.
 
+## Security
+### Sessions
+
+As a safety measure, the session will be terminated after 5 minutes of inactivity. This behavior can be modified in `bacchus/settings.py`, replacing `5` in `SESSION_COOKIE_AGE = 5 * 60` with a value of your choice.
+
+Session will also be terminated when browser is closed at some point. If you don't want to, change to `False` `SESSION_EXPIRE_AT_BROWSER_CLOSE` in `bacchus/settings.py`.
+
+In both cases, a restart of services is required.
+
 ## Restore
 
 Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's "Import VM" pane. You may use oVirt/RHEV to restore your VM.
