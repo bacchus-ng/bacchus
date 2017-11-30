@@ -56,7 +56,7 @@ pip install flower
 5. Create bacchus database and user on MariaDB    
 ```sql
 create database bacchus;
-grant all on bacchus.\* to bacchus@localhost identified by 'bacchus';
+grant all on bacchus.* to bacchus@localhost identified by 'bacchus';
 ```
 
 6. Create bacchus user on RabbitMQ (run the following commands with root user)    
@@ -64,7 +64,7 @@ grant all on bacchus.\* to bacchus@localhost identified by 'bacchus';
 rabbitmqctl add_user bacchus bacchus
 rabbitmqctl add_vhost bacchus
 rabbitmqctl set_user_tags bacchus Administrator
-rabbitmqctl set_permissions -p bacchus bacchus ".\*" ".\*" ".\*"
+rabbitmqctl set_permissions -p bacchus bacchus ".*" ".*" ".*"
 ```
 
 6. Create bacchus user and group on Linux    
@@ -122,11 +122,6 @@ In both cases, a restart of services is required.
 
 Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's "Import VM" pane. You may use oVirt/RHEV to restore your VM.
 
-## Demo
-
-http://demo.bacchus.co
-
-Please send us an e-mail for demo account.
 
 ## Contact Us
 
