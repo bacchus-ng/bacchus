@@ -170,7 +170,8 @@ class VMTools:
 		disk_attachments = disk_attachments_service.list()
 		for disk_attachment in disk_attachments:
 			disk = connection.follow_link(disk_attachment.disk)
-			size = size + disk.actual_size
+			if type(disk.actual_size) is int:
+				size = size + disk.actual_size
 		
 		connection.close()	
 			
