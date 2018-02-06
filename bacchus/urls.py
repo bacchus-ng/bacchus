@@ -12,4 +12,6 @@ urlpatterns = [
     url(r'', include('login.urls')),
     url(r'', include('manager.urls')),
     url(r'', include('scheduler.urls')),
+    url(r'', include('settings.urls')),
+    
 ]

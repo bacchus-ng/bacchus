@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^runbackup/$', views.run_backup, name='vms'),
     url(r'^tasks/$', views.list_tasks, name='tasks'),
     
+    
 ]
 

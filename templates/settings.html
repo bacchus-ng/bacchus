@@ -1,0 +1,46 @@
+{% extends 'gent_base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+ <div class="row">
+	<div class="">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Settings <small></small></h2>
+                  
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap">
+					<thead>
+                        <tr>                          
+                          <th>Parameter</th>
+                          <th>Value</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                      	{% for setting in settings %}
+                      	<form method="POST" class="post-form">
+                      	{% csrf_token %}	                      
+                        <tr>                     
+                          <td>{{ setting.parameter }}</td>
+                          
+                          <td><input type="text" id="{{setting.parameter}}" name="{{setting.parameter}}" required="required" value="{{setting.value}}" class="form-control col-md-7 col-xs-12"></td>
+                        </tr>
+                        </form>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+
+			</div>
+			
+		</div>
+	</div>	
+</div>
+
+
+
+{% endblock%}
+

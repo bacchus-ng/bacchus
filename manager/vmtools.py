@@ -54,7 +54,7 @@ class VMTools:
 			dcs_service = connection.system_service().data_centers_service()
 			dcs = dcs_service.list()	
 			for dc in dcs:
-				dcc = DataCenter.objects.filter(name=dc.name).count()
+				dcc = DataCenter.objects.filter(dcid=dc.id).count()
 				if (dcc > 0):
 					print "%s, already discovered !" % (dc.name)
 				else:
@@ -77,7 +77,7 @@ class VMTools:
 			clusters_service = connection.system_service().clusters_service()
 			cls = clusters_service.list()
 			for cl in cls:
-				clc = Cluster.objects.filter(name=cl.name).count()
+				clc = Cluster.objects.filter(clid=cl.id).count()
 				if (clc > 0):
 					print "%s, already discovered !" % (cl.name)
 				else:
@@ -96,41 +96,55 @@ class VMTools:
 	"""
 	@staticmethod
 	def run_host_inv():
-		
-		
+		rhevmlist = Manager.objects.all()
+		for rhevm in rhevmlist:
+			connection = VMTools.connect_to_rhevm(rhevm.name)
+			hosts_service = connection.system_service().hosts_service()
+			hosts = hosts_service.list()
+			for host in hosts:
+				hostc = Host.objects.filter(hostid=host.id).count()
+				if (hostc > 0):
+					print "%s, already discovered !" % (host.name)
+				else:
+					print "%s, found new  Host !!" % (host.name)
+					print "Adding entry to database"
+					now = VMTools.local_now()					
+					mycl = Cluster.objects.get(clid=host.cluster.id)
+					myhost = Host(hostid=host.id,name=host.name,cluster=mycl,discovered=now,updated=now)					
+					myhost.save()
+			connection.close()
 		return True
 	
-        @staticmethod
-        def run_vm_inv():
-                rhevmlist = Manager.objects.all()
-                for rhevm in rhevmlist:
-                        connection = VMTools.connect_to_rhevm(rhevm.name)
-                        vms_service = connection.system_service().vms_service()
-                        vms = vms_service.list()
-                        for vm in vms:
-                                vmc = VM.objects.filter(vmid=vm.id).count()
-                                if (vmc > 0):
-                                       	print "%s, already discovered !" % (vm.name)
-                                       	myvm = VM.objects.get(vmid=vm.id)
-                                       	myvm.updated = VMTools.local_now()
-                                       	myvm.status = vm.status
-                                       	myvm.name = vm.name
-                                       	myvm.size = VMTools.get_vm_size(myvm.cluster.dc.manager.name,myvm.name)
-                                       	myvm.save()
-                                else:
-                                	
-                                	if (vm.name.startswith('bacchus_')):
-                                		print "%s, found bacchus VM backup clone. Skipping. " %(vm.name)
-                                	else:
-                                		print "%s, found new  VM !!" % (vm.name)
-                                		now = VMTools.local_now()
-                                		mycl = Cluster.objects.get(clid=vm.cluster.id)
-                                		myvm = VM(cluster=mycl,name=vm.name,vmid=vm.id,status=vm.status.value,discovered=now,updated=now)
-                                		print "Adding entry to database"
-                                		myvm.save()
-                        connection.close()
-
+	@staticmethod
+	def run_vm_inv():
+		rhevmlist = Manager.objects.all()
+		for rhevm in rhevmlist:
+			connection = VMTools.connect_to_rhevm(rhevm.name)
+			vms_service = connection.system_service().vms_service()
+			vms = vms_service.list()
+			for vm in vms:
+				vmc = VM.objects.filter(vmid=vm.id).count()
+				if (vmc > 0):
+					print "%s, already discovered !" % (vm.name)
+					myvm = VM.objects.get(vmid=vm.id)
+					myvm.updated = VMTools.local_now()
+					myvm.status = vm.status
+					myvm.name = vm.name
+					myvm.size = VMTools.get_vm_size(myvm.cluster.dc.manager.name,myvm.name)
+					myvm.save()
+				else:
+					if (vm.name.startswith('bacchus_')):
+						print "%s, found bacchus VM backup clone. Skipping. " %(vm.name)
+					else:
+						print "%s, found new  VM !!" % (vm.name)
+						now = VMTools.local_now()
+						mycl = Cluster.objects.get(clid=vm.cluster.id)
+						myvm = VM(cluster=mycl,name=vm.name,vmid=vm.id,status=vm.status.value,discovered=now,updated=now)
+						print "Adding entry to database"
+						myvm.save()
+			connection.close()
 		return True
+	    
 	@staticmethod
 	def backup_success_rate():
 		
@@ -170,7 +184,8 @@ class VMTools:
 		disk_attachments = disk_attachments_service.list()
 		for disk_attachment in disk_attachments:
 			disk = connection.follow_link(disk_attachment.disk)
-			size = size + disk.actual_size
+			if type(disk.actual_size) is int:
+				size = size + disk.actual_size
 		
 		connection.close()	
 			

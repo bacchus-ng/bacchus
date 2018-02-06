@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'manager',
     'login',
     'scheduler',
+    'settings',
 ]
 
 MIDDLEWARE = [

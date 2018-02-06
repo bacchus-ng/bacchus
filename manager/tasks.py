@@ -14,6 +14,7 @@ def runInventory():
 	logger.info("Running Bacchus inventory" )
 	VMTools.run_dc_inv()
 	VMTools.run_cluster_inv()
+	VMTools.run_host_inv()
 	VMTools.run_vm_inv()
 	
 	return True
