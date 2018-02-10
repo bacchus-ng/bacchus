@@ -29,3 +29,7 @@ flower_pass: Passw0rd.
 # celery worker process number
 #
 worker_concurrency: 16
+#
+#
+bind_address: 0.0.0.0
+bind_port: 8080
