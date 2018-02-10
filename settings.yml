@@ -20,3 +20,12 @@ bacchus_base_path: /opt/bacchus
 #
 session_cookie_age: 300
 timezone: Europe/Istanbul
+#
+# celery flower settings
+#
+flower_user: admin
+flower_pass: Passw0rd.
+#
+# celery worker process number
+#
+worker_concurrency: 16
