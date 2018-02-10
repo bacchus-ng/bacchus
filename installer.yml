@@ -1,0 +1,174 @@
+---
+- name: Install Open Bacchus on Centos 7.x or RHEL 7.x
+  hosts: localhost
+
+  tasks:
+    - name: Include settings
+      include_vars:
+        file: settings.yml
+
+    - name: Ensure EPEL repo is enabled
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        state: present
+
+    - name: Install RPM dependencies
+      yum:
+        name: gcc,make,python-devel,libxml2-devel,mariadb-devel,git,python2-pip
+        state: present
+
+    - name: Install MariaDB
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: Install RabbitMQ
+      yum:
+        name: rabbitmq-server
+        state: present
+
+    - name: Upgrade pip using pip itself
+      command: pip install --upgrade pip
+
+    - name: Install Django
+      pip:
+        name: django
+        version: 1.10.6
+
+    - name: Install built-in encyrption
+      pip:
+        name: django-fernet-fields
+
+    - name: Install Ovirt Engine SDK
+      pip:
+        name: ovirt-engine-sdk-python
+        version: 4.1.2
+
+    - name: Install Python MySQL support
+      pip:
+        name: MySQL-python
+
+    - name: Install Celery
+      pip:
+        name: celery
+        version: 4.0.2
+
+    - name: Install Celery Beat
+      pip:
+        name: django-celery-beat
+
+    - name: Install Celery Results
+      pip:
+        name: django-celery-results
+
+    - name: Install Flower
+      pip:
+        name: flower
+
+    - name: Start MySQL Server
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Start RabbitMQ Server
+      service:
+        name: rabbitmq-server
+        state: started
+        enabled: yes
+
+    - name: Create the database
+      mysql_db:
+        name: bacchus
+        state: present
+
+    - name: Create user on database
+      mysql_user:
+        name: "{{ bacchus_db_user }}"
+        password: "{{ bacchus_db_pass }}" 
+        priv: 'bacchus.*:ALL,GRANT'
+        state: present
+
+    - name: Add RabbitMQ Vhost
+      rabbitmq_vhost:
+        name: /bacchus
+        state: present
+
+    - name: Create bacchus user on RabbitMQ
+      rabbitmq_user:
+        user: "{{ bacchus_mq_user }}"
+        password: "{{ bacchus_mq_pass }}"
+        vhost: /bacchus
+        configure_priv: .*
+        read_priv: .*
+        write_priv: .*
+        tags: Administrator
+        state: present
+
+    - name: Add OS user for bacchus
+      user:
+        name: bacchus
+        comment: "Open Bacchus"
+        
+    - name: Create Bacchus installation directory
+      file:
+        path: "{{ bacchus_base_path }}"
+        state: directory
+        owner: bacchus
+        group: bacchus
+        mode: 0755
+
+    - name: Retrieve Bacchus code from Github repository
+      git:
+        repo: https://github.com/openbacchus/bacchus
+        dest: "{{ bacchus_base_path }}"
+        force: yes
+      become: true
+      become_user: bacchus
+
+    - name: Session setting
+      lineinfile:
+        path: "{{ bacchus_base_path }}/bacchus/settings.py"
+        regexp: 'SESSION_COOKIE_AGE'
+        line: 'SESSION_COOKIE_AGE = {{ session_cookie_age }}'
+      become: true
+      become_user: bacchus
+
+    - name: Timezone setting
+      lineinfile:
+        path: "{{ bacchus_base_path }}/bacchus/settings.py"
+        regexp: 'TIME_ZONE'
+        line: "TIME_ZONE = \'{{ timezone }}\'"
+      become: true
+      become_user: bacchus
+
+    - name: Database settings
+      blockinfile:
+        path: "{{ bacchus_base_path }}/bacchus/settings.py"
+        block: |
+          DATABASES = {
+            'default': {
+               'ENGINE': 'django.db.backends.mysql',
+               'NAME': 'bacchus',
+               'USER': '{{bacchus_db_user}}',
+               'PASSWORD': '{{bacchus_db_pass}}',
+               'HOST': 'localhost',
+               'PORT': '3306',
+             }
+          }
+          CELERY_BROKER_URL = 'amqp://{{ bacchus_mq_user }}:{{ bacchus_mq_pass }}@localhost:5672/bacchus'
+
+    - name: Open Bacchus preflight check
+      command: python manage.py check
+      args:
+        chdir: "{{ bacchus_base_path }}"
+      become: true
+      become_user: bacchus
+
+    - name: Open Bacchus migrate
+      command: python manage.py migrate
+      args:
+        chdir: "{{ bacchus_base_path }}"
+      become: true
+      become_user: bacchus
+
