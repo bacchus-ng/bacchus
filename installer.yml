@@ -194,6 +194,7 @@
         - start_bacchus.sh
         - stop_bacchus.sh
         - restart_bacchus.sh
+        - status_bacchus.sh
         - start_worker.sh
         - stop_worker.sh
         - restart_worker.sh
@@ -227,7 +228,7 @@
              kill -9 $flower_pid
              rm -f {{ bacchus_base_path }}/tools/flower.pid
           else
-             echo "no pid file found"
+             echo "[flower] no pid file found"
           fi
 
     - name: Flower restart script
@@ -246,12 +247,12 @@
               flower_pid=$(cat {{ bacchus_base_path }}/tools/flower.pid)
               check_run=$(ps -q $flower_pid |wc -l)
               if [ $check_run -eq "2" ]; then
-                 echo "running with pid $flower_pid"
+                 echo "[flower] running with pid $flower_pid"
               else
-                 echo "pid exists but no process found"
+                 echo "[flower] pid exists but no process found"
               fi
           else
-              echo "not running"
+              echo "[flower] not running"
           fi 
 
     - name: Beat start script
@@ -270,7 +271,7 @@
              kill -9 $beat_pid
              rm -f {{ bacchus_base_path }}/tools/beat.pid
           else
-             echo "no pid file found"
+             echo "[beat] no pid file found"
           fi
 
     - name: Beat restart script
@@ -289,12 +290,12 @@
               beat_pid=$(cat {{ bacchus_base_path }}/tools/beat.pid)
               check_run=$(ps -q $beat_pid |wc -l)
               if [ $check_run -eq "2" ]; then
-                 echo "running with pid $beat_pid"
+                 echo "[beat] running with pid $beat_pid"
               else
-                 echo "pid exists but no process found"
+                 echo "[beat] pid exists but no process found"
               fi
           else
-              echo "not running"
+              echo "[beat] not running"
           fi
 
     - name: Worker start script
@@ -315,7 +316,7 @@
              pkill -9 -g $worker_pgid
              rm -f {{ bacchus_base_path }}/tools/worker.pid
           else
-             echo "no pid file found"
+             echo "[worker] no pid file found"
           fi
 
     - name: Worker restart script
@@ -334,19 +335,19 @@
               worker_pid=$(cat {{ bacchus_base_path }}/tools/worker.pid)
               check_run=$(ps -q $worker_pid |wc -l)
               if [ $check_run -eq "2" ]; then
-                 echo "running with pid $worker_pid"
+                 echo "[worker] running with pid $worker_pid"
               else
-                 echo "pid exists but no process found"
+                 echo "[worker] pid exists but no process found"
               fi
           else
-              echo "not running"
+              echo "[worker] not running"
           fi
 
     - name: Server start script
       blockinfile:
         path: "{{ bacchus_base_path }}/tools/start_server.sh"
         block: |
-          nohup python {{ bacchus_base_path }}/manage.py runserver 127.0.0.1:8080 >{{ bacchus_base_path }}/logs/server.log 2>&1 & 
+          nohup python {{ bacchus_base_path }}/manage.py runserver {{bind_address}}:{{bind_port}} >{{ bacchus_base_path }}/logs/server.log 2>&1 & 
           echo $! > {{ bacchus_base_path }}/tools/server.pid
 
     - name: Server stop script
@@ -359,7 +360,7 @@
              pkill -9 -g $server_pgid
              rm -f {{ bacchus_base_path }}/tools/server.pid
           else
-             echo "no pid file found"
+             echo "[server] no pid file found"
           fi
 
     - name: Server restart script
@@ -378,12 +379,58 @@
               server_pid=$(cat {{ bacchus_base_path }}/tools/server.pid)
               check_run=$(ps -q $server_pid |wc -l)
               if [ $check_run -eq "2" ]; then
-                 echo "running with pid $server_pid"
+                 echo "[server] running with pid $server_pid"
               else
-                 echo "pid exists but no process found"
+                 echo "[server] pid exists but no process found"
               fi
           else
-              echo "not running"
+              echo "[server] not running"
           fi
+
+    - name: Bacchus start script
+      blockinfile:
+        path: "{{ bacchus_base_path }}/tools/start_bacchus.sh"
+        block: |
+          {{ bacchus_base_path }}/tools/start_worker.sh
+          {{ bacchus_base_path }}/tools/start_beat.sh
+          {{ bacchus_base_path }}/tools/start_flower.sh
+          {{ bacchus_base_path }}/tools/start_server.sh
+          {{ bacchus_base_path }}/tools/status_worker.sh
+          {{ bacchus_base_path }}/tools/status_beat.sh
+          {{ bacchus_base_path }}/tools/status_flower.sh
+          {{ bacchus_base_path }}/tools/status_server.sh
+
+
+    - name: Bacchus stop script
+      blockinfile:
+        path: "{{ bacchus_base_path }}/tools/stop_bacchus.sh"
+        block: |
+          {{ bacchus_base_path }}/tools/stop_worker.sh
+          {{ bacchus_base_path }}/tools/stop_beat.sh
+          {{ bacchus_base_path }}/tools/stop_flower.sh
+          {{ bacchus_base_path }}/tools/stop_server.sh
+          {{ bacchus_base_path }}/tools/status_worker.sh
+          {{ bacchus_base_path }}/tools/status_beat.sh
+          {{ bacchus_base_path }}/tools/status_flower.sh
+          {{ bacchus_base_path }}/tools/status_server.sh
+
+
+    - name: Bacchus restart script
+      blockinfile:
+        path: "{{ bacchus_base_path }}/tools/restart_bacchus.sh"
+        block: |
+          {{ bacchus_base_path }}/tools/stop_bacchus.sh
+          sleep 1
+          {{ bacchus_base_path }}/tools/start_bacchus.sh
+
+    - name: Bacchus status script
+      blockinfile:
+        path: "{{ bacchus_base_path }}/tools/status_bacchus.sh"
+        block: |
+          {{ bacchus_base_path }}/tools/status_worker.sh
+          {{ bacchus_base_path }}/tools/status_beat.sh
+          {{ bacchus_base_path }}/tools/status_flower.sh
+          {{ bacchus_base_path }}/tools/status_server.sh
+          
 
 
