@@ -1,0 +1,22 @@
+---
+# Bacchus installer parameter file
+# 
+# MariaDB credentials
+# It is highly recommended to change them
+#
+bacchus_db_user: bacchus
+bacchus_db_pass: 123qwe
+#
+# RabbitMQ credentials
+# If you change the vhost definition, ensure it starts with "/"
+# 
+bacchus_mq_user: bacchus
+bacchus_mq_pass: qwe123
+#
+# Bacchus installation directory
+#
+bacchus_base_path: /opt/bacchus
+#
+#
+session_cookie_age: 300
+timezone: Europe/Istanbul
