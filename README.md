@@ -22,14 +22,14 @@ You need to have the following packages installed in your CentOS or RHEL
 ### Installation Steps
 1.  Retrieve the ansible playbook from GitHub repository.
 
-`wget https://raw.githubusercontent.com/openbacchus/bacchus/master/installer.yml`
-`wget https://raw.githubusercontent.com/openbacchus/bacchus/master/settings.yml`
+`# wget https://raw.githubusercontent.com/openbacchus/bacchus/master/installer.yml
+# wget https://raw.githubusercontent.com/openbacchus/bacchus/master/settings.yml`
 
 2. Change the default settings in the settings.yml file.
 
-3. Run the playbook as follows:
+3. Run the playbook with root privilege:
 
-`ansible-playbook installer.yml`
+`# ansible-playbook installer.yml`
 
 ## How to use Bacchus
 
