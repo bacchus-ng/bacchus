@@ -36,9 +36,15 @@ You need to have the following packages installed in your CentOS or RHEL
 
 5. It'is strongly recommended to install a SSL enabled reverse proxy in front of the Bacchus. (nginx will be integrated in the playbook soon )
 
+## Stop/Start Bacchus
+
+The installer will place the stop/start scripts under the <bacchus_base_path>/tools directory. You can use start_bacchus.sh to start the whole pieces of Bacchus and stop_bacchus.sh to stop them. Under <bacchus_base_path>/logs directory, you will find the log files.
+
 ## How to use Bacchus
 
-As you log in to Bacchus using the default URL, you need to navigate to RHEV/Ovirt -> Managers to introduce your oVirt to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for spontaneous backups or go to "Automation" pane and define a schedule.
+As you log in to Bacchus using the default URL, you need to navigate to RHEV/Ovirt -> Managers to add your Virtualization Manager to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for instant backups or go to "Automation" pane and define a schedule. 
+
+By default, Bacchus will run a discovery job every 10 minutes to detect the changes in your environment. You can change this interval in settings.yml file by changing the `inv_sched_interval` parameter. This job has a minimal impact on your system, so you do not need to worry about it.
 
 
 ## Restore
