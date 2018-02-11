@@ -1,40 +1,51 @@
 ---
-# Bacchus installer parameter file
-# 
+# Bacchus installer parameters file
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!! DO NOT FORGET TO CHANGE THE DEFAULT PASSWORDS !!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Please note that ansible playbook can be run more than once, each time you run the playbook
+# it will change the settings to these defaults.
+#
+# The scripts under {bacchus_base_path}/tools are also based on these parameters. 
+# If you change the following credentials manually on the corresponding application, 
+# you may need to edit the scripts in tools directory.
+#
+# Genereal settings
+#
+bacchus_base_path: /opt/bacchus
+timezone: Europe/Istanbul
+#
+#Inventory job interval, default 10 mins
+inv_sched_interval: 10
+#
+#
 # MariaDB credentials
-# It is highly recommended to change them
 #
 bacchus_db_user: bacchus
 bacchus_db_pass: 123qwe
 #
 # RabbitMQ credentials
-# If you change the vhost definition, ensure it starts with "/"
 # 
 bacchus_mq_user: bacchus
 bacchus_mq_pass: qwe123
 #
-# Bacchus installation directory
 #
-bacchus_base_path: /opt/bacchus
-#
-#
-session_cookie_age: 300
-timezone: Europe/Istanbul
-#
-# celery flower settings
+# Celery settings
 #
 flower_user: admin
 flower_pass: admin
-#
-# celery worker process number
-#
 worker_concurrency: 16
 #
 #
-bind_address: 0.0.0.0
-bind_port: 8080
-#
+# Bacchus Web Console settings
 #
 admin_username: admin
 admin_password: 123qwe
 admin_email: admin@localhost
+session_cookie_age: 300
+bind_address: 0.0.0.0
+bind_port: 8080
+#
+
