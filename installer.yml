@@ -157,6 +157,7 @@
              }
           }
           CELERY_BROKER_URL = 'amqp://{{ bacchus_mq_user }}:{{ bacchus_mq_pass }}@localhost:5672/bacchus'
+          BEAT_RESTART_SCRIPT = "{{ bacchus_base_path }}/tools/restart_beat.sh"
 
     - name: Open Bacchus preflight check
       command: python manage.py check
