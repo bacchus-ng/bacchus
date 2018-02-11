@@ -24,7 +24,7 @@ timezone: Europe/Istanbul
 # celery flower settings
 #
 flower_user: admin
-flower_pass: Passw0rd.
+flower_pass: admin
 #
 # celery worker process number
 #
