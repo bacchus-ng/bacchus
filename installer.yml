@@ -91,14 +91,14 @@
 
     - name: Add RabbitMQ Vhost
       rabbitmq_vhost:
-        name: /bacchus
+        name: bacchus
         state: present
 
     - name: Create bacchus user on RabbitMQ
       rabbitmq_user:
         user: "{{ bacchus_mq_user }}"
         password: "{{ bacchus_mq_pass }}"
-        vhost: /bacchus
+        vhost: bacchus
         configure_priv: .*
         read_priv: .*
         write_priv: .*
