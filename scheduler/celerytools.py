@@ -5,7 +5,7 @@ from models import *
 class CeleryTools:
     @staticmethod
     def restart_beat():
-        return os.system('cd '+settings.SCRIPTS_DIR+';./'+settings.BEAT_RESTART_SCRIPT)
+        return os.system(settings.BEAT_RESTART_SCRIPT)
     
     @staticmethod
     def schedule_exists(name):        
