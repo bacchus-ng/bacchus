@@ -80,18 +80,6 @@ WSGI_APPLICATION = 'bacchus.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bacchus',
-        'USER': 'bacchus',
-        'PASSWORD': 'bacchus',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -117,8 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Istanbul'
-
 USE_I18N = True
 
 USE_L10N = True
@@ -137,17 +123,11 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
 
-CELERY_BROKER_URL = 'amqp://bacchus:bacchus@localhost:5672/bacchus'
-
 CELERY_RESULT_BACKEND = 'django-db'
 
-SCRIPTS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'bacchus/scripts')
-BEAT_RESTART_SCRIPT = 'restart_beat.sh'
 
 # CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 # Session management and timeout
 # https://docs.djangoproject.com/en/1.10/topics/http/sessions/
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 5 * 60
