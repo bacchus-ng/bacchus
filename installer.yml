@@ -437,7 +437,7 @@
 
 
     - name: Add Bacchus admin account
-      command: python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('{{ admin_username }}', '{{ admin_email }}', '{{ admin_password }}')" 
+      command: python manage.py shell -c "from django.contrib.auth.models import User;  User.objects.filter(name='{{ admin_username }}').delete(); User.objects.create_superuser('{{ admin_username }}', '{{ admin_email }}', '{{ admin_password }}')" 
       args:
         chdir: "{{ bacchus_base_path }}"
       become: true
