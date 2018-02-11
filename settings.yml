@@ -33,3 +33,8 @@ worker_concurrency: 16
 #
 bind_address: 0.0.0.0
 bind_port: 8080
+#
+#
+admin_username: admin
+admin_password: Passw0rd.
+admin_email: admin@localhost
