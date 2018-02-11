@@ -312,8 +312,8 @@
         block: |
           if [ -e {{ bacchus_base_path }}/tools/worker.pid ]; then
              worker_pid=$(cat {{ bacchus_base_path }}/tools/worker.pid)
-             worker_pgid=$(ps -o pid,ppid,pgid,gid,sess,cmd |grep $worker_pid|grep -v grep|awk '{print $3}'|uniq)
-             pkill -9 -g $worker_pgid
+             pgrep -P $worker_pid |xargs -i kill -9 {}
+             kill -9 $worker_pid
              rm -f {{ bacchus_base_path }}/tools/worker.pid
           else
              echo "[worker] no pid file found"
@@ -356,8 +356,8 @@
         block: |
           if [ -e {{ bacchus_base_path }}/tools/server.pid ]; then
              server_pid=$(cat {{ bacchus_base_path }}/tools/server.pid)
-             server_pgid=$(ps -o pid,ppid,pgid,gid,sess,cmd |grep $server_pid|grep -v grep|awk '{print $3}'|uniq)
-             pkill -9 -g $server_pgid
+             pgrep -P $server_pid |xargs -i kill -9 {}
+             kill -9 $server_pid
              rm -f {{ bacchus_base_path }}/tools/server.pid
           else
              echo "[server] no pid file found"
@@ -432,5 +432,14 @@
           {{ bacchus_base_path }}/tools/status_flower.sh
           {{ bacchus_base_path }}/tools/status_server.sh
           
+    - debug:
+        msg: "Bacchus installation finished"
 
+
+    - name: Add Bacchus admin account
+      command: python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('{{ admin_username }}', '{{ admin_email }}', '{{ admin_password }}')" 
+      args:
+        chdir: "{{ bacchus_base_path }}"
+      become: true
+      become_user: bacchus
 
