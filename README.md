@@ -32,6 +32,8 @@ You need to have the following packages installed in your CentOS or RHEL
 
 `# ansible-playbook installer.yml`
 
+4. Point your browser to `http://<your ip address>:port/` which you set in your settings.yml file
+
 ## How to use Bacchus
 
 As you log in to Bacchus using the default URL, you need to navigate to RHEV/Ovirt -> Managers to introduce your oVirt to Bacchus. After successful addition, you may list your VMs under 'VM Protection' pane. You can either use "On Demand Backup" page for spontaneous backups or go to "Automation" pane and define a schedule.
