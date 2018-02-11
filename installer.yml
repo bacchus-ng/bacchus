@@ -443,3 +443,9 @@
       become: true
       become_user: bacchus
 
+    - name: Start Bacchus Web Console
+      shell: "{{ bacchus_base_path }}/tools/start_bacchus.sh"
+      become: true
+      become_user: bacchus
+
+
