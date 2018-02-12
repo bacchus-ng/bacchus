@@ -19,7 +19,7 @@ class CeleryTools:
     @staticmethod
     def define_inventory_sched(interval):
         inv_sched, created = IntervalSchedule.objects.get_or_create( every=interval, period=IntervalSchedule.MINUTES)
-        PeriodicTask.objects.create(interval=inv_sched, name="Bacchus_Inventory_Schedule",task='manager.tasks.runInventory()')
+        inv_task, created = PeriodicTask.objects.get_or_create(interval=inv_sched, name="Bacchus_Inventory_Schedule",task='manager.tasks.runInventory()')
         return True
         
         
