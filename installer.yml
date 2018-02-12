@@ -434,6 +434,12 @@
           {{ bacchus_base_path }}/tools/status_flower.sh
           {{ bacchus_base_path }}/tools/status_server.sh
 
+    - name: Create systemd service file
+      file:
+        path: "/etc/systemd/system/bacchus.service"
+        state: touch
+        mode: 0755
+
     - name: Install systemd service
       blockinfile:
         path: "/etc/systemd/system/bacchus.service"
