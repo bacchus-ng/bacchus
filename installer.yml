@@ -450,14 +450,14 @@
           [Service]
           Type=oneshot
           User=bacchus
-          ExecStart=/bin/bash {{ bacchus_base_path }}/start_bacchus.sh
-          ExecStop=/bin/bash {{ bacchus_base_path }}/stop_bacchus.sh
+          ExecStart=/bin/bash {{ bacchus_base_path }}/tools/start_bacchus.sh
+          ExecStop=/bin/bash {{ bacchus_base_path }}/tools/stop_bacchus.sh
           RemainAfterExit=yes
           [Install]
           WantedBy=multi-user.target
 
     - name: Enable Bacchus Service
-      command: systemctl daemon-reload; systemctl enable bacchus
+      command: "systemctl daemon-reload; systemctl enable bacchus"
 
     - debug:
         msg: "Bacchus installation finished"
@@ -477,7 +477,7 @@
       become_user: bacchus
 
     - name: Start Bacchus Web Console
-      command: systemctl start bacchus
+      command: "systemctl start bacchus"
 
 
 
