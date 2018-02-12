@@ -432,10 +432,28 @@
           {{ bacchus_base_path }}/tools/status_beat.sh
           {{ bacchus_base_path }}/tools/status_flower.sh
           {{ bacchus_base_path }}/tools/status_server.sh
-          
+
+    - name: Install systemd service
+      blockinfile:
+        path: "/etc/systemd/system/bacchus.service"
+        block: |
+          [Unit]
+          Description=Bacchus Service
+          After=network.target
+          [Service]
+          Type=oneshot
+          User=bacchus
+          ExecStart=/bin/bash {{ bacchus_base_path }}/start_bacchus.sh
+          ExecStop=/bin/bash {{ bacchus_base_path }}/stop_bacchus.sh
+          RemainAfterExit=yes
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Enable Bacchus Service
+      command: systemctl daemon-reload; systemctl enable bacchus
+
     - debug:
         msg: "Bacchus installation finished"
-
 
     - name: Add Bacchus admin account
       command: python manage.py shell -c "from django.contrib.auth.models import User;  User.objects.filter(username='{{ admin_username }}').delete(); User.objects.create_superuser('{{ admin_username }}', '{{ admin_email }}', '{{ admin_password }}')" 
@@ -452,8 +470,7 @@
       become_user: bacchus
 
     - name: Start Bacchus Web Console
-      shell: "{{ bacchus_base_path }}/tools/start_bacchus.sh"
-      become: true
-      become_user: bacchus
+      command: systemctl start bacchus
+
 
 
