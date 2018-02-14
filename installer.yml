@@ -457,7 +457,10 @@
           WantedBy=multi-user.target
 
     - name: Enable Bacchus Service
-      command: "systemctl daemon-reload; systemctl enable bacchus"
+      command: "systemctl daemon-reload"
+      
+    - name: Enable Bacchus Service
+      command: "systemctl enable bacchus"
 
     - debug:
         msg: "Bacchus installation finished"
