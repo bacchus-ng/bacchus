@@ -53,6 +53,13 @@ By default, Bacchus will run a discovery job every 10 minutes to detect the chan
 
 Bacchus "restore" functionality has not been implemented yet. VM backups will appear in Export Domain's "Import VM" pane. You may use oVirt/RHEV to restore your VM.
 
+## DEMO
+
+Please find the demo site at http://94.177.176.6/
+
+username : demo
+password : bacchusdemo
+
 
 ## Contact Us
 
