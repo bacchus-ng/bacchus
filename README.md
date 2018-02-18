@@ -38,7 +38,7 @@ You need to have the following packages installed in your CentOS or RHEL
 
 ## Stop/Start Bacchus
 
-The installer will place the stop/start scripts under the `<bacchus_base_path>/tools` directory. You can use `start_bacchus.sh` to start the whole pieces of Bacchus and `stop_bacchus.sh` to stop them. 
+The installer will place the systemd scripts in to your OS after a successful installation. You can use the `systemctl <stop/start/status> bacchus` command to stop/start the Bacchus services.
 
 Under `<bacchus_base_path>/logs` directory, you will find the log files.
 
