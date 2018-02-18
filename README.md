@@ -58,6 +58,7 @@ Bacchus "restore" functionality has not been implemented yet. VM backups will ap
 Please find the demo site at http://demo.openbacchus.com
 
 username : demo
+
 password : bacchusdemo
 
 
