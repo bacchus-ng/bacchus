@@ -12,14 +12,9 @@ from models import *
 @login_required(login_url="/settings/")
 def settings(request):
     if request.method == "POST":
-        manager_id = request.POST.get('manager_id')
-        if request.POST.get('delete_manager_'+manager_id) == "delete":
-            manager = Manager.objects.get(id=manager_id)
-            manager.delete()
-            return redirect('/managers/')
-        else:
-            return redirect('/edit_manager/'+request.POST.get('manager_id'))
-    else:
-        settings = Settings.objects.all()
+        for key in request.POST:
+            print(key)
+            value = request.POST[key]
+            print(value)
         return render(request,'settings.html',{'settings': settings })
 
