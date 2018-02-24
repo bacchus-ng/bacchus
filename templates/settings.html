@@ -12,6 +12,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
+				<form method="POST" class="post-form">
 				<table class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap">
 					<thead>
                         <tr>                          
@@ -21,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    	<form method="POST" class="post-form">
+                    	
                       	{% for setting in settings %}
                       	
                       	{% csrf_token %}	                      
@@ -32,10 +33,12 @@
                         </tr> 
                         
                         {% endfor %}
-                        <button type="submit" class="save btn btn-danger">Save</button>
-                        </form>
+                              
                      </tbody>
                   </table>
+                  
+                  <button type="submit" class="save btn btn-danger">Save</button>
+                  </form>
 
 			</div>
 			
