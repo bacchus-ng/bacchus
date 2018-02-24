@@ -11,6 +11,11 @@
                   
 				<div class="clearfix"></div>
 			</div>
+				{% if settings_saved %}
+				<tr class="success">           
+                	<th>Settings saved.</th>
+				</tr>
+				{% endif %}
 			<div class="x_content">
 				<form method="POST" class="post-form">
 				<table class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap">
