@@ -16,5 +16,7 @@ def settings(request):
             print(key)
             value = request.POST[key]
             print(value)
-        return render(request,'settings.html',{'settings': settings })
+            
+    settings = Settings.objects.all()
+    return render(request,'settings.html',{'settings': settings })
 
