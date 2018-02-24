@@ -12,10 +12,10 @@ from models import *
 @login_required(login_url="/settings/")
 def settings(request):
     if request.method == "POST":
-        for key in request.POST:
-            print(key)
-            value = request.POST[key]
-            print(value)
+        settings = Settings.objects.all()
+        for setting in settings:
+            setting.value = request.POST[setting.parameter]
+            setting.save()
             
     settings = Settings.objects.all()
     return render(request,'settings.html',{'settings': settings })
