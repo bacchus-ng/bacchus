@@ -2,3 +2,4 @@
 celerybeat.pid
 scripts/logs/
 bacchus/settings.py
+*.yml
