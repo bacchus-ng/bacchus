@@ -11,11 +11,7 @@
                   
 				<div class="clearfix"></div>
 			</div>
-				{% if settings_saved %}
-				<tr class="success">           
-                	<th>Settings saved.</th>
-				</tr>
-				{% endif %}
+
 			<div class="x_content">
 				<form method="POST" class="post-form">
 				<table class="table table-striped jambo_table bulk_action table-hover table-bordered dt-responsive nowrap">
@@ -41,7 +37,15 @@
                               
                      </tbody>
                   </table>
-                  
+   				{% if settings_saved %}
+   				<table class="table">
+   					<thead>
+						<tr class="success">           
+                			<th>Settings saved.</th>
+						</tr>
+					</thead>
+				</table>
+				{% endif %}
                   <button type="submit" class="save btn btn-danger">Save</button>
                   </form>
 
