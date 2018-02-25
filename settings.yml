@@ -48,4 +48,13 @@ session_cookie_age: 300
 bind_address: 0.0.0.0
 bind_port: 8080
 #
+# E-mail settings
+# 
+# If TLS is disabled in your setup, change "email_port" to 25 and "email_use_tls" to False
+#
+email_host: smtphost
+email_host_user: myusername@smtphost
+email_host_password: mysecret
+email_port: 587
+email_use_tls: True
 
