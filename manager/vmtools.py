@@ -13,6 +13,7 @@ from models import *
 import ovirtsdk4 as sdk
 import ovirtsdk4.types as types
 from django.conf.urls.static import static
+from scheduler.mailer import MailTools
 
 class VMTools:
 
@@ -190,71 +191,88 @@ class VMTools:
 		connection.close()	
 			
 		return size
-			
-        @staticmethod
-        def backup_vm(manager,vmname):
-                connection = VMTools.connect_to_rhevm(manager)
-                vms_service = connection.system_service().vms_service()
-                vm = vms_service.list(search='name='+str(vmname))[0]
-                snapshots_service = vms_service.vm_service(vm.id).snapshots_service()
-                snapshot_name = "bacchus_"+vmname+"_"+str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S'))
+	
+	@staticmethod
+	def backup_vm(manager,vmname):
+		connection = VMTools.connect_to_rhevm(manager)
+		vms_service = connection.system_service().vms_service()
+		vm = vms_service.list(search='name='+str(vmname))[0]
+		snapshots_service = vms_service.vm_service(vm.id).snapshots_service()
+		snapshot_name = "bacchus_"+vmname+"_"+str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S'))
 		export_domain = VMTools.get_export_domain(manager)
-		print "Creating a backup record at database "
+		if export_domain is None:
+			MailTools.notifyUsers("There is an issue with Export Domain on manager [ "+ manager + "]\nBackup aborted for " + vmname)
+			exit(1)
+		backup_log = "Creating a backup record at database \n"
 
 		myvm = VM.objects.get(vmid=vm.id)
 		vm_backups = VmBackups(vmid=myvm, name=snapshot_name,export=export_domain.name,start=VMTools.local_now())
 		vm_backups.save()
+		"""
+		!!!!!! check export domain status !!!!!
+		"""
 		
 		try:
 			snap = snapshots_service.add(types.Snapshot(description=snapshot_name,persist_memorystate=False),)
 			
 		except Exception as e:
-			print "Snapshot creation failed. \n %s" %str(e)  
+			
+			backup_log += "Snapshot creation failed on [ "+vmname +" ]with the following error  \n"+str(e)+"\n"
 			vm_backups.status = 1
+			vm_backups.log = backup_log
 			vm_backups.save()
-			connection.close()
+			connection.close()			
+			MailTools.notifyUsers(backup_log)
 			exit(1)
 
-		print "[ vmbackup",vm_backups.id,"] Snapshot creation initiated."
+		backup_log += "[ vmbackup" + str(vm_backups.id) + "] Snapshot creation initiated.\n"
 
 		vm_backups.status = 4
+		vm_backups.log = backup_log
 		vm_backups.save()
-
+		"""
+		Add timeout value for snapshot creation, cloning and exporting. 
+		If the process is stuck any of these steps, it will wait forever.
+		"""
 		snap_service = snapshots_service.snapshot_service(snap.id)
-			
+		
 		while snap.snapshot_status != types.SnapshotStatus.OK:
 			time.sleep(2)
 			snap = snap_service.get()
-		print "[ vmbackup",vm_backups.id,"] The snapshot is now complete"
-		print "[ vmbackup",vm_backups.id,"] Cloning VM from snapshot "
+		
+		backup_log += "[ vmbackup" + str(vm_backups.id) + "] The snapshot is now complete\n"
+		backup_log += "[ vmbackup" + str(vm_backups.id) + "] Cloning VM from snapshot\n"
 		vm_backups.status = 5
+		vm_backups.log = backup_log
 		vm_backups.save()
 		
 		cloned_vm = vms_service.add( vm=types.Vm(name=snapshot_name, cluster=types.Cluster(id=vm.cluster.id), snapshots=[types.Snapshot(id=snap.id)] ))
-		print "[ vmbackup",vm_backups.id,"] Cloning initiated"
-		cloned_vm_service = vms_service.vm_service(cloned_vm.id)	
+		backup_log += "[ vmbackup" + str(vm_backups.id) + "] Cloning initiated\n"		
+		cloned_vm_service = vms_service.vm_service(cloned_vm.id)
+
 		while True:
 			time.sleep(2)
 			cloned_vm = cloned_vm_service.get()
 			if cloned_vm.status == types.VmStatus.DOWN:
 				break
 
-		print "[ vmbackup",vm_backups.id,"] Clone VM completed "
+		backup_log += "[ vmbackup" + str(vm_backups.id) + "] Clone VM completed\n"
 		mysize = VMTools.get_vm_size(manager,snapshot_name)
-		print "VM backup size is %d " %mysize
+		backup_log +=  "VM backup size is " + str(mysize)
 		vm_backups.size = mysize
+		vm_backups.log = backup_log
 		vm_backups.save()
 		
-		print "[ vmbackup",vm_backups.id,"] Removing snapshot %s" %(snapshot_name)
+		backup_log += "[ vmbackup" + str(vm_backups.id) + "] Removing snapshot " + snapshot_name
+		vm_backups.log = backup_log
 		vm_backups.status = 6
 		vm_backups.save()
 
 		snap_service.remove()
 			
-		"""
-		!!!!!! export_domain dolu mu kontrol et !!!!!
-		"""	
-		print "[ vmbackup",vm_backups.id,"] Exporting cloned VM to export domain : %s" %(export_domain.name)
+			
+		backup_log += "[ vmbackup" +str(vm_backups.id) + "] Exporting cloned VM to export domain : " + export_domain.name
+		vm_backups.log = backup_log
 		vm_backups.status = 7
 		vm_backups.save()
 
@@ -266,10 +284,11 @@ class VMTools:
 			if cloned_vm.status == types.VmStatus.DOWN:
 				break
 		
-		print "[ vmbackup",vm_backups.id,"] Export completed"
-		print "[ vmbackup",vm_backups.id,"] Removing cloned VM %s" %(cloned_vm.name)	
+		backup_log += "[ vmbackup" + str(vm_backups.id) +"] Export completed\n"
+		backup_log += "[ vmbackup" + str(vm_backups.id) +"] Removing cloned VM " + cloned_vm.name	
 
 		vm_backups.status = 8
+		vm_backups.log = backup_log
 		vm_backups.save()
 
 		cloned_vm_service.remove()
