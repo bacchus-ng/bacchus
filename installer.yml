@@ -478,6 +478,13 @@
       become: true
       become_user: bacchus
 
+    - name: E-mail settings
+      command: python manage.py shell -c "from settings.models import Settings; Settings.objects.create(parameter='mail_to', value='{{ admin_email }}')"
+      args:
+        chdir: "{{ bacchus_base_path }}"
+      become: true
+      become_user: bacchus
+
     - name: Add Inventory Schedule
       command: python manage.py shell -c "from scheduler.celerytools import CeleryTools; CeleryTools.define_inventory_sched({{ inv_sched_interval }})" 
       args:
