@@ -36,7 +36,12 @@ You need to have the following packages installed in your CentOS or RHEL
 
 5. It'is strongly recommended to install a SSL enabled reverse proxy in front of the Bacchus. (nginx will be integrated in the playbook soon )
 
-## Stop/Start Bacchus
+### Notifications
+
+Please use the "Settings" section in Bacchus Web Console to get notified by e-mail.
+
+
+### Stop/Start Bacchus
 
 The installer will place the systemd scripts in to your OS after a successful installation. You can use the `systemctl <stop/start/status> bacchus` command to stop/start the Bacchus services.
 
@@ -66,7 +71,7 @@ password : bacchusdemo
 
 Please feel free to contact to openbacchus@gmail.com for any issues.
 
-Subscribe to our user mailing list to stay tuned http://bacchus.co/mailman/listinfo/users_bacchus.co
+Follow us on twitter @openbacchus
 
 You can also open an issue on GitHub project page.
 
