@@ -36,6 +36,11 @@ You need to have the following packages installed in your CentOS or RHEL
 
 5. It'is strongly recommended to install a SSL enabled reverse proxy in front of the Bacchus. (nginx will be integrated in the playbook soon )
 
+### Updates
+
+Please re-run the installer `# ansible-playbook installer.yml`, it will fetch the latest codes and update your current environment.
+
+
 ### Notifications
 
 Please use the "Settings" section in Bacchus Web Console to get notified by e-mail.
