@@ -86,6 +86,6 @@ Hope you enjoy Open Bacchus !
 
 Please donate ! https://www.patreon.com/openbacchus
 
-We need to some servers for a better development and testing environment.
+We need more resources for a better development and testing environment.
 
 Thank you !
