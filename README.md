@@ -82,3 +82,10 @@ You can also open an issue on GitHub project page.
 
 Hope you enjoy Open Bacchus !
 
+## Donate
+
+Please donate ! https://www.patreon.com/openbacchus
+
+We need to some servers for a better development and testing environment.
+
+Thank you !
