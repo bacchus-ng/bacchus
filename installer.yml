@@ -470,7 +470,10 @@
 
     - debug:
         msg: "Bacchus installation finished"
-
+        
+    - name: Log the successful installation
+      command: "wget -qO-  http://openbacchus.com/install"
+      
     - name: Add Bacchus admin account
       command: python manage.py shell -c "from django.contrib.auth.models import User;  User.objects.filter(username='{{ admin_username }}').delete(); User.objects.create_superuser('{{ admin_username }}', '{{ admin_email }}', '{{ admin_password }}')" 
       args:
