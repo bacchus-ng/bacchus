@@ -5,7 +5,6 @@ from datetime import datetime
 from manager.vmtools import *
 from scheduler.models import *
 from manager.tasks import *
-from scheduler.mailer import MailTools
 
 @shared_task
 def run_schedule(sched_id):

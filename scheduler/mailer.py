@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 from settings.models import Settings
-from scheduler.tasks import async_notify
+
 class MailTools:
     @staticmethod
     def sendMail(mail_to,message):
