@@ -551,6 +551,9 @@
 
     - name: Start Bacchus Web Console
       command: "systemctl restart bacchus"
+      
+    - debug:
+        msg: "Installation finished.\nYou can access your Bacchus at https://{{bacchus_hostname}}:{{nginx_ssl_port}}"
 
 
 
