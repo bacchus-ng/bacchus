@@ -13,8 +13,12 @@ class MailTools:
         return MailTools.sendMail(mail_to,"This is an auto-generated message to test Open Bacchus e-mail settings.")
 
     @staticmethod
-    def notifyUsers(message):
+    def notify(message):
         mails = Settings.objects.get(parameter="mail_to")
         mail_to = mails.value.split(',')        
         return MailTools.sendMail(mail_to,message)
+    
+    @staticmethod
+    def notifyUsers(message):
+        tasks.notify.delay(message)
         
