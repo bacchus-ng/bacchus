@@ -46,8 +46,8 @@ admin_username: admin
 admin_password: 123qwe
 admin_email: admin@localhost
 session_cookie_age: 300
-bind_address: 0.0.0.0
-bind_port: 8080
+bacchus_bind_port: 8080
+nginx_ssl_port: 8081
 #
 # E-mail settings
 # 
