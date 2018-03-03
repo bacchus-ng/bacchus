@@ -553,7 +553,15 @@
       command: "systemctl restart bacchus"
       
     - debug:
-        msg: "Installation finished.\nYou can access your Bacchus at https://{{bacchus_hostname}}:{{nginx_ssl_port}}"
+        msg: 
+          - "Installation finished. You can access your Bacchus now." 
+          - "URL: https://{{bacchus_hostname}}:{{nginx_ssl_port}}"
+          - "username: admin"
+          - "password: {{admin_password}}"
+          - "--------------------------------------------------------"
+          - "Thank you for using Bacchus. Please donate if you liked it."
+          - "https://www.patreon.com/openbacchus"
+      
 
 
 
