@@ -32,9 +32,8 @@ You need to have the following packages installed in your CentOS or RHEL
 
 `# ansible-playbook installer.yml`
 
-4. Point your browser to `http://<your ip address>:port/` which you set in your settings.yml file
+4. Point your browser to `https://<bacchus_hostname>/` which you set in your settings.yml file. NGINX is a part of Bacchus now and it is installed with a self-signed certificate by default.
 
-5. It'is strongly recommended to install a SSL enabled reverse proxy in front of the Bacchus. (nginx will be integrated in the playbook soon )
 
 ### Updates
 
