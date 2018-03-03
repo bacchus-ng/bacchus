@@ -483,7 +483,7 @@
       become_user: bacchus
 
     - name: E-mail settings
-      command: python manage.py shell -c "from settings.models import Settings; Settings.objects.create(parameter='mail_to', value='{{ admin_email }}')"
+      command: python manage.py shell -c "from settings.models import Settings; Settings.objects.get_or_create(parameter='mail_to', value='{{ admin_email }}')"
       args:
         chdir: "{{ bacchus_base_path }}"
       become: true
