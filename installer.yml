@@ -27,6 +27,11 @@
         name: rabbitmq-server
         state: present
 
+    - name: Install NGINX
+      yum:
+        name: nginx
+        state: present
+
     - name: Upgrade pip using pip itself
       command: pip install --upgrade pip
 
@@ -89,6 +94,7 @@
         priv: 'bacchus.*:ALL,GRANT'
         state: present
 
+
     - name: Add RabbitMQ Vhost
       rabbitmq_vhost:
         name: bacchus
@@ -141,6 +147,47 @@
         line: "TIME_ZONE = \'{{ timezone }}\'"
       become: true
       become_user: bacchus
+
+    - name: NGINX settings
+      file:
+        path: "/etc/nginx/conf.d/bacchus.conf"
+        state: touch
+
+    - name: NGINX settings
+      blockinfile:
+        path: "/etc/nginx/conf.d/bacchus.conf"
+        block: |
+          server {
+              server_name '{{bacchus_hostname}}';
+              listen 443 ssl default deferred;
+              ssl_certificate /etc/ssl/certs/bacchus-selfsigned.crt;
+              ssl_certificate_key /etc/ssl/private/bacchus-selfsigned.key;
+              ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
+              ssl_prefer_server_ciphers on;
+              ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+              location / {
+                    	proxy_pass_header Authorization;
+                        proxy_pass http://127.0.0.1:8080;
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_http_version 1.1;
+                        proxy_set_header Connection "";
+                        proxy_buffering off;
+                        client_max_body_size 0;
+                        proxy_read_timeout 36000s;
+                        proxy_redirect off;
+              }
+          }
+
+    - name: Create certificate directories
+      file:
+        path: "/etc/ssl/private"
+        state: directory
+        mode: 0755
+
+    - name: Generate SSL self-signed certificate
+      command: openssl req -x509 -nodes -days 3650 -newkey rsa:4096 -keyout /etc/ssl/private/bacchus-selfsigned.key -out /etc/ssl/certs/bacchus-selfsigned.crt -subj "/C=TR/ST=Turkey/L=Istanbul/O=OpenBacchus/CN={{bacchus_hostname}}"
 
     - name: Database settings
       blockinfile:
@@ -467,6 +514,9 @@
       
     - name: Enable Bacchus Service
       command: "systemctl enable bacchus"
+    
+    - name: Enable NGINX
+      command: "systemctl enable nginx"
 
     - debug:
         msg: "Bacchus installation finished"
@@ -496,8 +546,12 @@
       become: true
       become_user: bacchus
 
+    - name: Start NGINX
+      command: "systemctl restart nginx"
+
     - name: Start Bacchus Web Console
       command: "systemctl restart bacchus"
+
 
 
 
