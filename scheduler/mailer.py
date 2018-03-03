@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 from settings.models import Settings
-
+from scheduler.tasks import async_notify
 class MailTools:
     @staticmethod
     def sendMail(mail_to,message):
@@ -13,12 +13,7 @@ class MailTools:
         return MailTools.sendMail(mail_to,"This is an auto-generated message to test Open Bacchus e-mail settings.")
 
     @staticmethod
-    def notify(message):
+    def notifyUsers(message):
         mails = Settings.objects.get(parameter="mail_to")
         mail_to = mails.value.split(',')        
         return MailTools.sendMail(mail_to,message)
-    
-    @staticmethod
-    def notifyUsers(message):
-        tasks.notify.delay(message)
-        

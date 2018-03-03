@@ -5,6 +5,7 @@ from datetime import datetime
 from manager.vmtools import *
 from scheduler.models import *
 from manager.tasks import *
+from scheduler.mailer import MailTools
 
 @shared_task
 def run_schedule(sched_id):
@@ -14,6 +15,3 @@ def run_schedule(sched_id):
         backup_vm.delay(backupsched.vm.cluster.dc.manager.name,backupsched.vm.name)        
     return True
 
-@shared_task
-def notify(message):
-    return MailTools.notify(message)
