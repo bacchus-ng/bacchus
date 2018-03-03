@@ -32,7 +32,7 @@ You need to have the following packages installed in your CentOS or RHEL
 
 `# ansible-playbook installer.yml`
 
-4. Point your browser to `https://<bacchus_hostname>/` which you set in your settings.yml file NGINX is part of Bacchus now and it is installed with a self-signed certificate by default.
+4. Point your browser to `https://<bacchus_hostname>/` which you set in your settings.yml file. NGINX is a part of Bacchus now and it is installed with a self-signed certificate by default.
 
 
 ### Updates
