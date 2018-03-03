@@ -497,7 +497,7 @@
       become_user: bacchus
 
     - name: Start Bacchus Web Console
-      command: "systemctl start bacchus"
+      command: "systemctl restart bacchus"
 
 
 
