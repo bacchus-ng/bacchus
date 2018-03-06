@@ -14,6 +14,7 @@ import ovirtsdk4 as sdk
 import ovirtsdk4.types as types
 from django.conf.urls.static import static
 from scheduler.mailer import MailTools
+from bacchus import settings
 
 class VMTools:
 
@@ -194,26 +195,38 @@ class VMTools:
 	
 	@staticmethod
 	def backup_vm(manager,vmname):
-		connection = VMTools.connect_to_rhevm(manager)
+		backup_log = "Creating a backup record at database \n"
+		myvm = VM.objects.get(name=vmname)
+		snapshot_name = "bacchus_"+vmname+"_"+str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S'))
+		vm_backups = VmBackups(vmid=myvm, name=snapshot_name,export="None",start=VMTools.local_now(),log=backup_log)		
+		vm_backups.save()
+		try:
+			connection = VMTools.connect_to_rhevm(manager)
+		except Exception as e:
+			backup_log += "Unable to connect to manager "+ manager +"\n"
+			print backup_log
+			vm_backups.log = backup_log
+			vm_backups.save()
+			exit(1)
+		
 		vms_service = connection.system_service().vms_service()
 		vm = vms_service.list(search='name='+str(vmname))[0]
 		snapshots_service = vms_service.vm_service(vm.id).snapshots_service()
-		snapshot_name = "bacchus_"+vmname+"_"+str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S'))
 		export_domain = VMTools.get_export_domain(manager)
+		vmbackups.export=export_domain.name
+		vmbackups.save()
 		if export_domain is None:
 			MailTools.notifyUsers("There is an issue with Export Domain on manager [ "+ manager + "]\nBackup aborted for " + vmname)
 			exit(1)
-		backup_log = "Creating a backup record at database \n"
+		
 
-		myvm = VM.objects.get(vmid=vm.id)
-		vm_backups = VmBackups(vmid=myvm, name=snapshot_name,export=export_domain.name,start=VMTools.local_now())
-		vm_backups.save()
+
 		"""
 		!!!!!! check export domain status !!!!!
 		"""
 		
 		try:
-			snap = snapshots_service.add(types.Snapshot(description=snapshot_name,persist_memorystate=False),)
+			snap = snapshots_service.add(types.Snapshot(description=snapshot_name,persist_memorystate=settings.SNAPSHOT_PERSIST_MEMORY),)
 			
 		except Exception as e:
 			

@@ -139,6 +139,11 @@
         line: 'SESSION_COOKIE_AGE = {{ session_cookie_age }}'
       become: true
       become_user: bacchus
+    - name: Snapshot persist memory
+      lineinfile:
+        path: "{{ bacchus_base_path }}/bacchus/settings.py"
+        regexp: 'SNAPSHOT_PERSIST_MEMORY'
+        line: 'SNAPSHOT_PERSIST_MEMORY = {{ snapshot_persist_memory }}'
 
     - name: Timezone setting
       lineinfile:

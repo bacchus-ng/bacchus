@@ -21,6 +21,10 @@ timezone: Europe/Istanbul
 #Inventory job interval, default 10 mins
 inv_sched_interval: 10
 #
+# Snapshot persist memory setting:
+# when enabled all backups will include memory state
+# this option may lead performance issues, use carefully
+snapshot_persist_memory: False
 #
 # MariaDB credentials
 #
@@ -58,4 +62,5 @@ email_host_user: myusername@smtphost
 email_host_password: mysecret
 email_port: 587
 email_use_tls: True
-
+#
+#
