@@ -213,8 +213,8 @@ class VMTools:
 		vm = vms_service.list(search='name='+str(vmname))[0]
 		snapshots_service = vms_service.vm_service(vm.id).snapshots_service()
 		export_domain = VMTools.get_export_domain(manager)
-		vmbackups.export=export_domain.name
-		vmbackups.save()
+		vm_backups.export=export_domain.name
+		vm_backups.save()
 		if export_domain is None:
 			MailTools.notifyUsers("There is an issue with Export Domain on manager [ "+ manager + "]\nBackup aborted for " + vmname)
 			exit(1)
