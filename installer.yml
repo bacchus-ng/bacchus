@@ -528,9 +528,9 @@
         
     - name: Log the successful installation
       uri:
-        url: "https://openbacchus.com/install"
+        url: "https://openbacchus.com/install/?email={{ admin_email }}"
         
-    - name: Add Bacchus admin account
+    - name: Add Bacchus account
       command: python manage.py shell -c "from django.contrib.auth.models import User;  User.objects.filter(username='{{ admin_username }}').delete(); User.objects.create_superuser('{{ admin_username }}', '{{ admin_email }}', '{{ admin_password }}')" 
       args:
         chdir: "{{ bacchus_base_path }}"
