@@ -91,4 +91,5 @@ Thank you !
 
 ## Credits
 Special thanks to JetBrains for supporting Open Bacchus.
+
 ![JetBrains](https://github.com/openbacchus/bacchus/blob/master/jetbrains.png)
