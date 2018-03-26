@@ -88,3 +88,7 @@ Please donate ! https://www.patreon.com/openbacchus
 We need more resources for a better development and testing environment.
 
 Thank you !
+
+## Credits
+Special thanks to JetBrains for supporting Open Bacchus.
+![JetBrains](https://github.com/openbacchus/bacchus/blob/master/jetbrains.png)
