@@ -561,7 +561,7 @@
         msg: 
           - "Installation finished. You can access your Bacchus now." 
           - "URL: https://{{bacchus_hostname}}:{{nginx_ssl_port}}"
-          - "username: admin"
+          - "username: {{admin_username}}"
           - "password: {{admin_password}}"
           - "--------------------------------------------------------"
           - "Thank you for using Bacchus. Please donate if you liked it."
