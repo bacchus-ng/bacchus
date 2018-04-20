@@ -504,7 +504,7 @@
         block: |
           [Unit]
           Description=Bacchus Service
-          After=network.target
+          After=mariadb.service
           [Service]
           Type=oneshot
           User=bacchus
