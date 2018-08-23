@@ -32,6 +32,12 @@
         name: nginx
         state: present
 
+    - name: Allow NGINX to connect Django
+      seboolean:
+        name: httpd_can_network_connect
+        state: yes
+        persistent: yes
+
     - name: Upgrade pip using pip itself
       command: pip install --upgrade pip
 
