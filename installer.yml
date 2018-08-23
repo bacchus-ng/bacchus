@@ -7,11 +7,6 @@
       include_vars:
         file: settings.yml
 
-    - name: Disable Selinux
-      selinux:
-         policy: targeted
-         state: permissive
-
     - name: Ensure EPEL repo is enabled
       yum:
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -36,6 +31,12 @@
       yum:
         name: nginx
         state: present
+
+    - name: Allow NGINX to connect Django
+      seboolean:
+        name: httpd_can_network_connect
+        state: yes
+        persistent: yes
 
     - name: Upgrade pip using pip itself
       command: pip install --upgrade pip
