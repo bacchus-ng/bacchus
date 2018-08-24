@@ -255,7 +255,7 @@ class VMTools:
 
                 vm_disk_attachments_service = vms_service.vm_service(vm.id).disk_attachments_service()
                 vm_disk_attachments = vm_disk_attachments_service.list()
-                for disk_attachment in disk_attachments:
+                for disk_attachment in vm_disk_attachments:
                     disk = connection.follow_link(disk_attachment.disk)
                     while disk.status != types.DiskStatus.OK:
                         time.sleep(2)
