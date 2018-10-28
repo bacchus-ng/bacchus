@@ -118,14 +118,26 @@ class VMTools:
 		return True
 	
 	@staticmethod
+	def check_deleted_vms(rhvemlist):
+		print "Looking for obsolete VMs"
+		for my_vm in VM.objects.all():
+			if my_vm.vmid not in rhvemlist:
+				print "VM %s, not anymore in RHEVM. Removing it." %(my_vm.name)
+				my_vm.delete()
+	
+	@staticmethod
 	def run_vm_inv():
 		rhevmlist = Manager.objects.all()
 		for rhevm in rhevmlist:
+			# a list to keep track of rhev vm's ids
+			rhevmids = []
 			connection = VMTools.connect_to_rhevm(rhevm.name)
 			vms_service = connection.system_service().vms_service()
 			vms = vms_service.list()
 			for vm in vms:
 				vmc = VM.objects.filter(vmid=vm.id).count()
+				# keep track of vm's ids
+				rhevmids.append(vm.id)
 				if (vmc > 0):
 					print "%s, already discovered !" % (vm.name)
 					myvm = VM.objects.get(vmid=vm.id)
@@ -144,6 +156,8 @@ class VMTools:
 						myvm = VM(cluster=mycl,name=vm.name,vmid=vm.id,status=vm.status.value,discovered=now,updated=now)
 						print "Adding entry to database"
 						myvm.save()
+			# remove vms previously added on the db and not anymore in rhev
+			VMTools.check_deleted_vms(rhevmids)
 			connection.close()
 		return True
 	    
