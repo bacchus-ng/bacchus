@@ -19,7 +19,6 @@ Creating the organization page will allow us to oparate on OpenBacchus as a team
 
 More info --> https://blog.github.com/2010-06-29-introducing-organizations/
 
-**Idea:** Our new organization can be renamed as **Bacchus**, and openbacchus will be the opensource version of our backup solution, Bacchus enterprise edition. We can create RedHat-Fedora like relationship with Bachhus-OpenBachhus. 
 
 ### Website
 
