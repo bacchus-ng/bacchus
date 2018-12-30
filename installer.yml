@@ -14,7 +14,7 @@
 
     - name: Install RPM dependencies
       yum:
-        name: gcc,make,python-devel,libxml2-devel,mariadb-devel,git,python2-pip
+        name: gcc,make,python-devel,libxml2-devel,mariadb-devel,git,python2-pip,libsemanage-python,policycoreutils-python
         state: present
 
     - name: Install MariaDB
@@ -37,6 +37,12 @@
         name: httpd_can_network_connect
         state: yes
         persistent: yes
+    - name: Allow NGINX to connect Django
+      seport:
+        ports: 8081
+        proto: tcp
+        setype: http_port_t
+        state: present
 
     - name: Upgrade pip using pip itself
       command: pip install --upgrade pip
