@@ -46,7 +46,10 @@
 
     - name: Upgrade pip using pip itself
       command: pip install --upgrade pip
-
+      
+    - name: Upgrade setuptools
+      command: pip install setuptools -U
+      
     - name: Install Django
       pip:
         name: django
