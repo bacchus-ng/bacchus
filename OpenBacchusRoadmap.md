@@ -3,7 +3,7 @@
 2019 Roadmap for OpenBacchus app.
 
 
-- [ ] GitHub Organization page
+- [x] GitHub Organization page
 - [ ] Website
 - [ ] New Installer
 - [ ] Fix the issues on GitHub 
