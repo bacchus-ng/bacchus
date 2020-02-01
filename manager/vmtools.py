@@ -164,7 +164,9 @@ class VMTools:
 		sds_service = connection.system_service().storage_domains_service()
 		sds = sds_service.list()
 		i = 0
-		while ((sds[i].type.value != 'export')&(i<len(sds))):
+		while (i<len(sds)):
+			if (sds[i].type.value == 'export' and sds[i].status is None):
+				break
 			i = i +1
 		
 		if (i<len(sds)):
