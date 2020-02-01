@@ -252,7 +252,15 @@ class VMTools:
 		while snap.snapshot_status != types.SnapshotStatus.OK:
 			time.sleep(2)
 			snap = snap_service.get()
-		
+
+                vm_disk_attachments_service = vms_service.vm_service(vm.id).disk_attachments_service()
+                vm_disk_attachments = vm_disk_attachments_service.list()
+                for disk_attachment in vm_disk_attachments:
+                    disk = connection.follow_link(disk_attachment.disk)
+                    while disk.status != types.DiskStatus.OK:
+                        time.sleep(2)
+                        disk = connection.follow_link(disk_attachment.disk)
+
 		backup_log += "[ vmbackup" + str(vm_backups.id) + "] The snapshot is now complete\n"
 		backup_log += "[ vmbackup" + str(vm_backups.id) + "] Cloning VM from snapshot\n"
 		vm_backups.status = 5
